@@ -431,7 +431,7 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
     // Configura o estado inicial da busca (ex: Busca por Bairro 'Centro')
     elements.searchType.value = 'bairro';
-    elements.searchInput.value = 'Centro'; 
+    elements.searchInput.value = ''; 
     elements.searchInput.placeholder = 'Digite o nome do Bairro';
     handleSearch();
 });
