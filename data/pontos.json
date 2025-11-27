@@ -1,77 +1,37 @@
 [
-  {
-    "id": "trace-01",
-    "nome": "Ecoponto Central Recicla",
-    "endereco": "Rua das Flores, 123",
-    "descricao": "Ecoponto municipal que aceita diversos tipos de lixo eletrônico, incluindo pilhas e baterias. Possui equipe para auxiliar no descarte correto.",
-    "tipoInstituicao": "Prefeitura",
-    "horarios": "Seg–Sex 09:00–17:00, Sáb 08:00–12:00",
-    "caixaColetora": "sim",
-    "bairro": "Centro",
-    "cep": "01000-000",
-    "tiposResiduos": ["pilhas", "baterias", "celulares", "cabos", "periféricos"],
-    "imagem": "assets/images/exemplo1.jpg",
-    "latitude": -23.550520,
-    "longitude": -46.633300
-  },
-  {
-    "id": "trace-02",
-    "nome": "ONG Tech Verde",
-    "endereco": "Avenida Brasil, 456",
-    "descricao": "Organização não governamental focada no recondicionamento e descarte de eletrônicos para doação e reciclagem.",
-    "tipoInstituicao": "ONG",
-    "horarios": "Seg–Sex 09:00–18:00",
-    "caixaColetora": "nao",
-    "bairro": "Vila Nova",
-    "cep": "02000-000",
-    "tiposResiduos": ["computadores", "notebooks", "monitores", "impressoras", "celulares"],
-    "imagem": "assets/images/exemplo2.jpg",
-    "latitude": -23.547780,
-    "longitude": -46.640100
-  },
-  {
-    "id": "trace-03",
-    "nome": "Eletro Store - Ponto de Coleta",
-    "endereco": "Rua Augusta, 789",
-    "descricao": "Loja de eletrônicos que oferece um ponto de coleta para descarte de pequenos e médios aparelhos. Ideal para itens comprados na rede.",
-    "tipoInstituicao": "Loja",
-    "horarios": "Seg–Sáb 10:00–22:00",
-    "caixaColetora": "sim",
-    "bairro": "Consolação",
-    "cep": "03000-000",
-    "tiposResiduos": ["celulares", "tablets", "cabos", "fones de ouvido"],
-    "imagem": "assets/images/exemplo3.jpg",
-    "latitude": -23.558300,
-    "longitude": -46.657000
-  },
-  {
-    "id": "trace-04",
-    "nome": "Centro Comunitário Alfa",
-    "endereco": "Rua da Saúda, s/n",
-    "descricao": "Ponto de coleta esporádico em parceria com a prefeitura. Verifique os dias de coleta especial.",
-    "tipoInstituicao": "Posto de coleta",
-    "horarios": "Conforme eventos (consultar site)",
-    "caixaColetora": "nao informado",
-    "bairro": "Vila Mariana",
-    "cep": "04000-000",
-    "tiposResiduos": ["todos"],
-    "imagem": "assets/images/exemplo4.jpg",
-    "latitude": -23.583000,
-    "longitude": -46.638000
-  },
-  {
-    "id": "trace-05",
-    "nome": "Ponto Verde Shopping",
-    "endereco": "Avenida das Américas, 1000",
-    "descricao": "Ponto de coleta permanente em shopping center. Acesso facilitado e segurança.",
-    "tipoInstituicao": "Loja",
-    "horarios": "Todos os dias 10:00–22:00",
-    "caixaColetora": "sim",
-    "bairro": "Barra Funda",
-    "cep": "05000-000",
-    "tiposResiduos": ["pilhas", "baterias", "celulares", "pequenos eletrodomésticos"],
-    "imagem": "assets/images/exemplo5.jpg",
-    "latitude": -23.525000,
-    "longitude": -46.690000
-  }
+{
+"nome": "Parque Tecnológico da Bahia (CAB)",
+"endereco": "5ª Avenida, Plataforma II, Ala B, 1º Andar, nº 0, CAB, Salvador, BA",
+"o_que_aceita": "Itens de informática (monitores, CPUs, mouses, teclados, estabilizadores, cartuchos), Pilhas e Baterias.",
+"latitude": -12.9260,
+"longitude": -38.4147
+},
+{
+"nome": "Shopping Bella Vista",
+"endereco": "Alameda Euvaldo Luz, 92 – Horto Bela Vista, Salvador, BA",
+"o_que_aceita": "Celulares, gabinetes, mouses e teclados (posto próximo à Administração).",
+"latitude": -12.9690,
+"longitude": -38.4610
+},
+{
+"nome": "Salvador Norte Shopping",
+"endereco": "BA-526, 305 – São Cristóvão, Salvador, BA",
+"o_que_aceita": "Diversos tipos de lixo eletrônico (posto no piso L1, ao lado do balcão de informações).",
+"latitude": -12.9200,
+"longitude": -38.3580
+},
+{
+"nome": "Casas Bahia - Itapuã (PEV)",
+"endereco": "Avenida Dorival Caymmi, 264 – Itapuã, Salvador, BA",
+"o_que_aceita": "Eletroeletrônicos em geral e Pilhas/Baterias.",
+"latitude": -12.9520,
+"longitude": -38.3750
+},
+{
+"nome": "Fábrica Cultural (Cidade Baixa)",
+"endereco": "Rua Rosalvo Barbosa, ao lado da Igreja São Jorge, Vila Ruy Barbosa, Salvador, BA",
+"o_que_aceita": "Diversos resíduos eletrônicos.",
+"latitude": -12.9120,
+"longitude": -38.4980
+}
 ]
