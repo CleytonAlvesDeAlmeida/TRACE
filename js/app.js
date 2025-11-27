@@ -89,6 +89,7 @@ function initializeMap(lat, lon, name) {
     }
 
     const mapContainer = document.getElementById('detail-map');
+    // Verifica se o container existe e é visível.
     if (!mapContainer) return;
 
     // Inicializa mapa e centraliza no ponto
@@ -110,12 +111,9 @@ function initializeMap(lat, lon, name) {
     L.marker([lat, lon], { icon: activeIcon }).addTo(currentMapInstance)
         .bindPopup(name).openPopup();
 
-    // Corrige visualização do mapa dentro de um modal após a transição
-    setTimeout(() => {
-        if (currentMapInstance) {
-            currentMapInstance.invalidateSize();
-        }
-    }, 350); 
+    // NOTA: Removemos o setTimeout interno daqui e confiamos no setTimeout externo
+    // na função openDetailModal para o invalidateSize, garantindo que o modal 
+    // tenha completado a transição CSS.
 }
 
 
@@ -204,11 +202,20 @@ function openDetailModal(point) {
     const residuosList = document.getElementById('residuos-list');
     residuosList.innerHTML = point.tiposResiduos.map(r => `<li>${r.toUpperCase()}</li>`).join('');
 
-    // Mapa
-    initializeMap(point.latitude, point.longitude, point.nome);
-
+    // ** CORREÇÃO DE ERRO DE VISIBILIDADE DO MAPA **
+    // 1. Abre o modal primeiro para que o container do mapa tenha dimensões reais.
     elements.detailModal.classList.add('open');
-    document.body.style.overflow = 'hidden'; // Evita scroll da página principal
+    document.body.style.overflow = 'hidden';
+
+    // 2. Inicializa o mapa com um pequeno delay (ex: 300ms) para permitir que a transição CSS termine.
+    // Isso garante que o Leaflet consiga calcular o tamanho do seu container corretamente.
+    setTimeout(() => {
+        initializeMap(point.latitude, point.longitude, point.nome);
+        // Invalidate size é crucial para modais, pois o mapa estava escondido
+        if (currentMapInstance) {
+            currentMapInstance.invalidateSize(); 
+        }
+    }, 300); 
 }
 
 /**
