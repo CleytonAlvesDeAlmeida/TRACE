@@ -1,663 +1,424 @@
-/* =========================================================================
-   1. Variáveis de Cor (Paleta T.R.A.C.E.)
-   ========================================================================= */
-
+/* VARIÁVEIS DE COR E TIPOGRAFIA */
 :root {
-    /* Primária (P) */
-    --color-p-900: #03264C;
-    --color-p-700: #06406F;
-    --color-p-500: #0A6EC4; /* Principal */
-    --color-p-300: #4FA2E0;
-    --color-p-100: #B7D8F6;
+    /* Primária (P) - Azul Escuro/Azul Claro (Tecnologia, Confiança, Água Limpa) */
+    --p-900: #03264C; /* Cor principal da barra de navegação/fundo escuro */
+    --p-700: #06406F;
+    --p-500: #0A6EC4; /* Azul de Ação/Destaque */
+    --p-300: #4FA2E0;
+    --p-100: #B7D8F6; /* Fundo claro para listas/seleções */
 
     /* Neutros (N) */
-    --color-n-1000: #0A0A0A; /* Textos */
-    --color-n-700: #2E2E2E;
-    --color-n-500: #7A7A7A;
-    --color-n-300: #D9E3ED; /* Bordas, desabilitado */
-    --color-n-100: #F3F7FA; /* Fundos claros */
-    --color-white: #FFFFFF;
+    --n-1000: #0A0A0A; /* Preto do texto */
+    --n-700: #2E2E2E; /* Texto secundário */
+    --n-500: #7A7A7A; /* Placeholder/ícones neutros */
+    --n-300: #D9E3ED; /* Bordas e separadores */
+    --n-100: #F3F7FA; /* Cor de fundo principal */
+    
+    /* Ação / Verde (A) - Reciclagem, Sustentabilidade */
+    --a-600: #2DAA4A; /* Verde de Sucesso/Sim */
+    --a-400: #54C96A;
+    --a-200: #C8F3D1;
 
-    /* Ação / Verde (A) */
-    --color-a-600: #2DAA4A; /* Ação principal */
-    --color-a-400: #54C96A;
-    --color-a-200: #C8F3D1;
+    /* Erro (E) - Falha, Negativo */
+    --e-600: #D9372A; /* Vermelho de Erro/Não */
+    --e-400: #F2695C;
+    --e-200: #F7B1A9;
 
-    /* Erro (E) */
-    --color-e-600: #D9372A;
-    --color-e-400: #F2695C;
-    --color-e-200: #F7B1A9;
+    /* Aviso (W) - Atenção */
+    --w-600: #D9A400; /* Amarelo/Laranja de Aviso */
+    --w-400: #F2C94C;
+    --w-200: #F9EAB5;
 
-    /* Info (I) */
-    --color-i-600: #0A6EC4;
-    --color-i-200: #B7D8F6;
+    /* Tipografia (Baseada em Inter) */
+    --font-family-base: 'Inter', sans-serif;
+    --h1-font-size: 32px;
+    --h1-font-weight: 700; 
+    --h1-color: var(--p-900);
+
+    --h2-font-size: 26px;
+    --h2-font-weight: 700;
+    --h2-color: var(--p-900);
+
+    --h3-font-size: 20px;
+    --h3-font-weight: 600; 
+    --h3-color: var(--p-700);
+
+    --body1-font-size: 16px;
+    --body1-color: var(--n-1000);
+
+    --body2-font-size: 14px;
+    --body2-color: var(--n-700);
+
+    --caption-font-size: 12px;
+    --caption-color: var(--n-500);
 }
 
-/* =========================================================================
-   2. Reset e Tipografia (Base)
-   ========================================================================= */
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
+/* 1. Base Styles & Reset */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: var(--color-n-100);
-    color: var(--color-n-1000);
+    font-family: var(--font-family-base);
+    color: var(--body1-color);
+    line-height: 1.5;
+    margin: 0;
+    background-color: var(--n-100);
+    /* Garante scroll suave, embora seja uma única página */
+    scroll-behavior: smooth; 
+}
+main { 
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 1rem; 
+}
+a { 
+    text-decoration: none; 
+    color: var(--p-500);
+    transition: color 0.2s;
+}
+a:hover { color: var(--p-700); }
+
+h1 { font-size: var(--h1-font-size); font-weight: var(--h1-font-weight); color: var(--h1-color); margin-top: 0; }
+h2 { font-size: var(--h2-font-size); font-weight: var(--h2-font-weight); color: var(--h2-color); }
+h3 { font-size: var(--h3-font-size); font-weight: var(--h3-font-weight); color: var(--h3-color); }
+p { font-size: var(--body1-font-size); color: var(--body1-color); }
+.caption { 
+    font-size: var(--caption-font-size); 
+    color: var(--caption-color); 
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
+/* 2. Componentes Comuns */
 
-/* Headings */
-h1 {
-    font-size: clamp(28px, 6vw, 32px);
-    font-weight: bold;
-    color: var(--color-p-900);
-}
-
-h2 {
-    font-size: clamp(22px, 5vw, 26px);
-    font-weight: bold;
-    color: var(--color-p-900);
-    margin-bottom: 0.8rem;
-}
-
-h3 {
-    font-size: clamp(18px, 4vw, 20px);
-    font-weight: 600; /* semi-bold */
-    color: var(--color-p-700);
-}
-
-/* Textos */
-.body1 {
-    font-size: 16px;
-    font-weight: normal; /* regular */
-    color: var(--color-n-1000);
-}
-
-.body2 {
-    font-size: 14px;
-    font-weight: normal; /* regular */
-    color: var(--color-n-700);
-}
-
-.caption {
-    font-size: 12px;
-    color: var(--color-n-500);
-}
-
-/* =========================================================================
-   3. Componentes UI (Header, Menu, Botões, Cards)
-   ========================================================================= */
-
-/* Header e Navbar */
-.header {
-    background-color: var(--color-p-900);
-    padding: 1rem 0;
+/* Botões */
+.btn-base {
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    font-size: var(--body1-font-size);
+    text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.btn-primary { 
+    background-color: var(--p-500); 
+    color: white; 
+}
+.btn-primary:hover { 
+    background-color: var(--p-700); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+.btn-primary:active { background-color: var(--p-900); }
+.btn-primary:disabled { background-color: var(--n-300); color: var(--n-500); cursor: not-allowed; }
 
-.header .container {
+/* Cards */
+.card {
+    background-color: white;
+    border: 1px solid var(--n-300);
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); 
+    transition: all 0.2s;
+}
+.card:hover {
+    /* Efeito de elevação sutil ao passar o mouse */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+.card.cursor-pointer:focus {
+    /* Foco para acessibilidade */
+    outline: 2px solid var(--p-500);
+    outline-offset: 2px;
+}
+
+/* Inputs e Selects */
+.input-field, .select-field {
+    width: 100%;
+    border: 1px solid var(--n-300);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: var(--body1-font-size);
+    color: var(--n-1000);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box; 
+    margin-bottom: 1rem; /* Adicionado para mobile */
+}
+.input-field:focus, .select-field:focus { 
+    outline: none; 
+    border-color: var(--p-500); 
+    box-shadow: 0 0 0 3px var(--p-100); 
+}
+.input-field.hidden { display: none; }
+
+/* Feedback de Busca */
+#search-feedback {
+    color: var(--e-600);
+    font-weight: 600;
+    min-height: 15px; /* Evita Cumulative Layout Shift (CLS) */
+}
+
+/* 3. Layout Específico (Search Area) */
+.search-controls { 
+    display: flex; 
+    flex-direction: column;
+    gap: 0;
+}
+
+/* 4. Navbar & Menu Responsivo */
+.navbar {
+    background-color: var(--p-900);
+    color: white;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.logo-text {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: var(--color-white);
-    text-decoration: none;
-}
-
-.logo-T {
-    color: var(--color-p-500); /* Destaque P-500 */
-}
-
-.nav-menu {
-    display: none; /* Escondido por padrão no mobile */
-    flex-direction: column;
-    position: fixed;
+    position: sticky;
     top: 0;
-    right: 0;
-    width: 250px;
-    height: 100%;
-    background-color: var(--color-p-700); /* Fundo P-700 */
-    padding: 1rem;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    z-index: 100;
-    transform: translateX(100%);
-    transition: transform 0.3s ease-out;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
-
-.nav-menu.active {
-    transform: translateX(0);
+.navbar .logo { 
+    font-size: var(--h2-font-size); 
+    font-weight: 800; 
+    color: white; 
 }
-
-.nav-menu a {
-    color: var(--color-white);
-    text-decoration: none;
-    padding: 0.75rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    transition: background-color 0.2s;
-}
-
-.nav-menu a:hover {
-    background-color: var(--color-p-500);
-    padding-left: 0.5rem;
-}
-
-.nav-menu .nav-logo {
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.menu-toggle {
+.navbar-links { display: none; } /* Esconde em mobile */
+.hamburger-menu {
     background: none;
     border: none;
     cursor: pointer;
     padding: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 24px;
-    z-index: 101; /* Fica acima do menu */
+    display: block; 
 }
 
-.icon-bar {
-    display: block;
-    width: 20px;
-    height: 2px;
-    background-color: var(--color-white);
-    transition: all 0.2s ease-in-out;
-}
-
-/* Botões */
-.btn {
-    padding: 0.75rem 1.25rem;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    text-align: center;
-    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-}
-
-/* Botão Primário */
-.btn-primary {
-    background-color: var(--color-p-500);
-    color: var(--color-white);
-}
-
-.btn-primary:hover:not(:disabled) {
-    background-color: var(--color-p-700);
-}
-
-.btn-primary:active:not(:disabled) {
-    background-color: var(--color-p-900);
-}
-
-.btn-primary:disabled {
-    background-color: var(--color-n-300);
-    color: var(--color-n-500);
-    cursor: not-allowed;
-}
-
-/* Botão Secundário */
-.btn-secondary {
-    background-color: transparent;
-    border-color: var(--color-p-500);
-    color: var(--color-p-500);
-}
-
-.btn-secondary:hover:not(:disabled) {
-    background-color: var(--color-p-100);
-}
-
-.btn-secondary:active:not(:disabled) {
-    background-color: var(--color-p-300);
-}
-
-/* Botão Ação (Confirmar) */
-.btn-action {
-    background-color: var(--color-a-600);
-    color: var(--color-white);
-}
-
-.btn-action:hover:not(:disabled) {
-    background-color: var(--color-a-400);
-}
-
-.btn-action:disabled {
-    background-color: var(--color-a-200);
-    cursor: not-allowed;
-}
-
-/* Inputs e Selects */
-.input {
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--color-n-300);
-    border-radius: 4px;
-    font-size: 16px;
-    color: var(--color-n-1000);
-    width: 100%;
-}
-
-.input:focus {
-    border-color: var(--color-p-500);
-    outline: none;
-    box-shadow: 0 0 0 2px var(--color-p-100);
-}
-
-.input::placeholder {
-    color: var(--color-n-500);
-}
-
-/* Estado de Erro */
-.input.error {
-    border-color: var(--color-e-600);
-}
-
-.input.error::placeholder {
-    color: var(--color-e-600);
-}
-
-/* Cards (Geral) */
-.card {
-    background-color: var(--color-white);
-    border: 1px solid var(--color-n-300);
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 6px #00000018;
-    margin-bottom: 1.5rem;
-}
-
-/* =========================================================================
-   4. Layout Principal e Áreas Específicas
-   ========================================================================= */
-
-.main-content {
-    padding-top: 2rem;
-    padding-bottom: 3rem;
-}
-
-.intro {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.intro p {
-    margin-top: 0.5rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Área de Busca */
-.search-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.input-group {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.input-group input {
-    flex-grow: 1;
-}
-
-/* Listagem de Cards */
-.card-list {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: 1fr; /* Mobile: 1 coluna */
-}
-
-.result-card {
-    display: flex;
-    gap: 1rem;
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
-    transition: box-shadow 0.2s, border-color 0.2s;
-}
-
-.result-card:hover {
-    box-shadow: 0 4px 12px #00000025;
-    border-color: var(--color-p-500);
-}
-
-.card-image-container {
-    flex-shrink: 0;
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.card-image {
-    width: 100%;
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    right: -250px; /* Esconde fora da tela */
+    width: 250px;
     height: 100%;
-    object-fit: cover;
+    background-color: var(--p-700);
+    color: white;
+    box-shadow: -4px 0 8px rgba(0,0,0,0.4);
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Curva suave */
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
 }
-
-.card-info {
-    flex-grow: 1;
+.sidebar.open { right: 0; }
+.sidebar-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 1rem; 
+    border-bottom: 1px solid var(--p-900); 
 }
-
-.card-info h3 {
-    margin-bottom: 0.25rem;
+.sidebar-header .close-btn { 
+    background: none; 
+    border: none; 
+    cursor: pointer; 
+    color: white; 
+    font-size: 2rem;
+    line-height: 1; 
+    padding: 0.5rem; 
 }
-
-.card-info p {
-    margin: 0.1rem 0;
+.sidebar-links { list-style: none; padding: 1rem 0; margin: 0; }
+.sidebar-links li a { 
+    display: block; 
+    padding: 0.8rem 1.5rem; 
+    color: white; 
+    text-decoration: none; 
+    font-size: var(--body1-font-size);
+    transition: background-color 0.2s; 
 }
+.sidebar-links li a:hover { background-color: var(--p-500); }
 
-/* Estado Vazio */
-.empty-state {
-    text-align: center;
-    padding: 3rem 1rem;
-    border: 2px dashed var(--color-n-300);
-    border-radius: 12px;
-    background-color: var(--color-white);
-}
-
-.info-message {
-    padding: 0.5rem;
-    border: 1px solid var(--color-i-200);
-    background-color: var(--color-i-200);
-    color: var(--color-i-600);
-    border-radius: 4px;
-}
-
-/* =========================================================================
-   5. Modal de Detalhes
-   ========================================================================= */
-
-.modal {
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: none; /* Escondido por padrão */
-    justify-content: center;
-    align-items: center;
-    z-index: 200;
-    padding: 1rem;
-    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: none;
+    transition: opacity 0.3s;
 }
+.overlay.active { display: block; }
 
-.modal.is-visible {
+/* 5. Resultados e Skeletons */
+.result-list {
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.modal-content {
-    background-color: var(--color-white);
-    border-radius: 12px;
-    max-width: 800px;
-    width: 100%;
-    padding: 2rem;
-    position: relative;
-    max-height: 90vh;
-    overflow-y: auto;
+/* Estado de Nenhum Resultado */
+#empty-state {
+    border-color: var(--w-400); 
+    background-color: var(--w-200);
+    color: var(--w-600);
 }
+#empty-state h3 { color: var(--w-600); }
+#empty-state p { color: var(--w-600); }
 
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 2rem;
-    font-weight: 300;
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--color-n-500);
-    line-height: 1;
-}
-
-#modal-map {
-    height: 250px;
-    width: 100%;
-    border-radius: 8px;
-    margin-top: 1rem;
-    border: 1px solid var(--color-n-300);
-}
-
-.detail-image-container {
-    width: 100%;
-    max-height: 300px;
-    overflow: hidden;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-}
-
-.detail-image {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-.residuos-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-}
-
-.residuos-list li {
-    background-color: var(--color-p-100);
-    color: var(--color-p-700);
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 14px;
-}
-
-/* Tabela de Detalhes */
-.detail-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-}
-.detail-table td {
-    padding: 0.5rem 0;
-    border-bottom: 1px dashed var(--color-n-300);
-}
-.detail-table td:first-child {
-    font-weight: 600;
-    color: var(--color-p-700);
-    width: 40%;
-}
-.detail-table td:last-child {
-    text-align: right;
-    color: var(--color-n-700);
-}
-.detail-table tr:last-child td {
-    border-bottom: none;
-}
-
-/* Cores de status de caixa coletora */
-.status-sim { color: var(--color-a-600); font-weight: bold; }
-.status-nao { color: var(--color-e-600); font-weight: bold; }
-.status-ni { color: var(--color-n-500); }
-
-
-/* =========================================================================
-   6. Estados de Carregamento (Skeletons e Spinner)
-   ========================================================================= */
-
-/* Spinner (simples) */
-.spinner {
-    border: 4px solid var(--color-n-300);
-    border-top: 4px solid var(--color-p-500);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 2rem auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Skeleton Loader */
+/* Skeleton Loading Card */
 .skeleton-card {
     display: flex;
     gap: 1rem;
-    padding: 1rem;
-    border: 1px solid var(--color-n-300);
-    border-radius: 12px;
-    background-color: var(--color-white);
+    align-items: center;
     overflow: hidden;
     position: relative;
+    padding: 1rem;
+    border-radius: 12px;
+    background-color: white;
+    border: 1px solid var(--n-300);
 }
-
-.skeleton-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 8px;
-    background-color: var(--color-n-100);
-}
-
-.skeleton-info {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.skeleton-line {
-    height: 16px;
-    background-color: var(--color-n-100);
-    border-radius: 4px;
-    margin-bottom: 8px;
-}
-
-.skeleton-line.h3 {
-    width: 70%;
-    height: 20px;
-}
-.skeleton-line.body1 {
-    width: 90%;
-}
-.skeleton-line.body2 {
-    width: 50%;
-}
-
-/* Efeito de Animação do Skeleton */
-.skeleton-card::before {
+.skeleton-card::after {
     content: '';
     position: absolute;
     top: 0;
-    left: -150%;
-    width: 150%;
+    left: -100%;
+    width: 100%;
     height: 100%;
-    background: linear-gradient(to right, 
-        rgba(255, 255, 255, 0) 0%, 
-        rgba(217, 227, 237, 0.5) 50%, /* N-300 com opacidade */
-        rgba(255, 255, 255, 0) 100%
-    );
-    animation: loading-bar 1.5s infinite;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    animation: loading 1.5s infinite;
 }
+@keyframes loading { to { left: 100%; } }
+.skeleton-img { width: 80px; height: 80px; background-color: var(--n-300); border-radius: 8px; flex-shrink: 0; }
+.skeleton-text-container { width: 100%; }
+.skeleton-text { height: 14px; background-color: var(--n-300); border-radius: 4px; margin-bottom: 8px; }
+.skeleton-text.short { width: 40%; }
+.skeleton-text.medium { width: 80%; }
+.skeleton-text.long { width: 100%; }
 
-@keyframes loading-bar {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+
+/* 6. Modal de Detalhes */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex; justify-content: center; align-items: center; 
+    z-index: 2000;
+    visibility: hidden; opacity: 0; 
+    transition: visibility 0.3s, opacity 0.3s;
 }
+.modal-overlay.open { visibility: visible; opacity: 1; }
+.modal-content {
+    background-color: white; border-radius: 12px; 
+    max-width: 95%; max-height: 90vh; 
+    overflow-y: auto;
+    width: 800px; 
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
+    transform: scale(0.95); 
+    transition: transform 0.3s;
+    position: relative;
+}
+.modal-overlay.open .modal-content { transform: scale(1); }
+.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem; border-bottom: 1px solid var(--n-300); }
+.modal-header h3 { margin: 0; color: var(--p-900); }
+.modal-body { padding: 1.5rem; }
+.modal-close-btn { background: none; border: none; cursor: pointer; font-size: 2rem; color: var(--n-700); line-height: 1; }
+#detail-map { 
+    height: 350px; 
+    border-radius: 8px; 
+    margin-top: 1rem; 
+    /* Garante que o mapa do Leaflet ocupe todo o espaço */
+    width: 100%;
+}
+#residuos-list { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 8px; 
+    list-style: none; 
+    padding: 0; 
+    margin: 0;
+}
+#residuos-list li { 
+    background-color: var(--p-100); 
+    color: var(--p-700); 
+    padding: 4px 10px; 
+    border-radius: 6px; 
+    font-size: var(--body2-font-size); 
+    font-weight: 600; 
+    white-space: nowrap; /* Evita quebras de linha em chips pequenos */
+}
+#detail-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+/* Cores do texto de Detalhes */
+#detail-institution { color: var(--p-700); }
+.modal-body p strong { color: var(--n-700); }
+.modal-body p { font-size: var(--body2-font-size); }
 
-/* =========================================================================
-   7. Media Queries (Responsividade)
-   ========================================================================= */
 
-/* Tablet e Desktop (Acima de 768px) */
+/* 7. Toast de Notificação */
+.toast { 
+    position: fixed; 
+    bottom: 20px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    padding: 12px 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); 
+    font-size: var(--body2-font-size); 
+    color: white; 
+    display: none; 
+    opacity: 0; 
+    transition: opacity 0.3s, transform 0.3s; 
+    z-index: 3000; /* Acima de tudo */
+    font-weight: 600;
+}
+.toast.show { 
+    display: block; 
+    opacity: 1; 
+    transform: translateX(-50%) translateY(-10px); 
+}
+.toast.success { background-color: var(--a-600); }
+.toast.error { background-color: var(--e-600); }
+.toast.warning { background-color: var(--w-600); }
+
+
+/* 8. Media Queries (Responsividade) */
+
+/* Tablet e Desktop */
 @media (min-width: 768px) {
-    
-    /* Header e Menu */
-    .menu-toggle {
-        display: none; /* Esconde o hambúrguer */
-    }
-
-    .nav-menu {
-        position: static;
-        display: flex;
-        flex-direction: row;
+    /* Navbar */
+    .navbar-links { 
+        display: flex; 
+        align-items: center;
         gap: 1.5rem;
-        width: auto;
-        height: auto;
-        padding: 0;
-        box-shadow: none;
-        transform: translateX(0);
+    }
+    .hamburger-menu, .sidebar, .overlay { 
+        display: none !important; /* Esconde elementos mobile */
     }
     
-    .nav-menu a {
-        padding: 0;
-        border-bottom: none;
-        color: var(--color-white);
+    /* Layout de Busca */
+    .search-controls { 
+        flex-direction: row; 
+        gap: 1rem; 
+        align-items: center;
     }
-
-    .nav-menu a:hover {
-        background-color: transparent;
-        color: var(--color-p-300);
-        padding-left: 0;
+    .search-controls > * { 
+        flex-grow: 1; 
+        margin-bottom: 0;
     }
-
-    .nav-menu .nav-logo {
-        display: none; /* Esconde o logo duplicado no menu desktop */
+    .search-controls .btn-primary { 
+        flex-grow: 0; 
+        min-width: 150px; 
     }
+    
+    /* Lista de Resultados em Grid */
+    .result-list { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+        gap: 1.5rem;
+    }
+    .skeleton-card.hidden { display: flex !important; }
 
-    /* Área de Busca */
-    .search-controls {
+    /* Modal de Detalhes */
+    .modal-body .flex-col {
         flex-direction: row;
-        align-items: flex-end;
-    }
-    
-    .search-controls label {
-        flex-shrink: 0;
-    }
-
-    #search-type {
-        width: 180px;
-        flex-shrink: 0;
-    }
-
-    .input-group {
-        flex-grow: 1;
-        width: auto;
-    }
-    
-    .input-group input {
-        width: auto;
-        flex-grow: 1;
-    }
-    
-    .input-group button {
-        flex-shrink: 0;
-    }
-
-    /* Listagem de Cards */
-    .card-list {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 2 ou 3 colunas */
-    }
-
-    /* Modal */
-    .modal-content {
-        padding: 2.5rem;
     }
 }
