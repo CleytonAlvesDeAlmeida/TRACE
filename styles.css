@@ -1,0 +1,663 @@
+/* =========================================================================
+   1. Variáveis de Cor (Paleta T.R.A.C.E.)
+   ========================================================================= */
+
+:root {
+    /* Primária (P) */
+    --color-p-900: #03264C;
+    --color-p-700: #06406F;
+    --color-p-500: #0A6EC4; /* Principal */
+    --color-p-300: #4FA2E0;
+    --color-p-100: #B7D8F6;
+
+    /* Neutros (N) */
+    --color-n-1000: #0A0A0A; /* Textos */
+    --color-n-700: #2E2E2E;
+    --color-n-500: #7A7A7A;
+    --color-n-300: #D9E3ED; /* Bordas, desabilitado */
+    --color-n-100: #F3F7FA; /* Fundos claros */
+    --color-white: #FFFFFF;
+
+    /* Ação / Verde (A) */
+    --color-a-600: #2DAA4A; /* Ação principal */
+    --color-a-400: #54C96A;
+    --color-a-200: #C8F3D1;
+
+    /* Erro (E) */
+    --color-e-600: #D9372A;
+    --color-e-400: #F2695C;
+    --color-e-200: #F7B1A9;
+
+    /* Info (I) */
+    --color-i-600: #0A6EC4;
+    --color-i-200: #B7D8F6;
+}
+
+/* =========================================================================
+   2. Reset e Tipografia (Base)
+   ========================================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: var(--color-n-100);
+    color: var(--color-n-1000);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Headings */
+h1 {
+    font-size: clamp(28px, 6vw, 32px);
+    font-weight: bold;
+    color: var(--color-p-900);
+}
+
+h2 {
+    font-size: clamp(22px, 5vw, 26px);
+    font-weight: bold;
+    color: var(--color-p-900);
+    margin-bottom: 0.8rem;
+}
+
+h3 {
+    font-size: clamp(18px, 4vw, 20px);
+    font-weight: 600; /* semi-bold */
+    color: var(--color-p-700);
+}
+
+/* Textos */
+.body1 {
+    font-size: 16px;
+    font-weight: normal; /* regular */
+    color: var(--color-n-1000);
+}
+
+.body2 {
+    font-size: 14px;
+    font-weight: normal; /* regular */
+    color: var(--color-n-700);
+}
+
+.caption {
+    font-size: 12px;
+    color: var(--color-n-500);
+}
+
+/* =========================================================================
+   3. Componentes UI (Header, Menu, Botões, Cards)
+   ========================================================================= */
+
+/* Header e Navbar */
+.header {
+    background-color: var(--color-p-900);
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--color-white);
+    text-decoration: none;
+}
+
+.logo-T {
+    color: var(--color-p-500); /* Destaque P-500 */
+}
+
+.nav-menu {
+    display: none; /* Escondido por padrão no mobile */
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100%;
+    background-color: var(--color-p-700); /* Fundo P-700 */
+    padding: 1rem;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+}
+
+.nav-menu.active {
+    transform: translateX(0);
+}
+
+.nav-menu a {
+    color: var(--color-white);
+    text-decoration: none;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background-color 0.2s;
+}
+
+.nav-menu a:hover {
+    background-color: var(--color-p-500);
+    padding-left: 0.5rem;
+}
+
+.nav-menu .nav-logo {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 24px;
+    z-index: 101; /* Fica acima do menu */
+}
+
+.icon-bar {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background-color: var(--color-white);
+    transition: all 0.2s ease-in-out;
+}
+
+/* Botões */
+.btn {
+    padding: 0.75rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+/* Botão Primário */
+.btn-primary {
+    background-color: var(--color-p-500);
+    color: var(--color-white);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--color-p-700);
+}
+
+.btn-primary:active:not(:disabled) {
+    background-color: var(--color-p-900);
+}
+
+.btn-primary:disabled {
+    background-color: var(--color-n-300);
+    color: var(--color-n-500);
+    cursor: not-allowed;
+}
+
+/* Botão Secundário */
+.btn-secondary {
+    background-color: transparent;
+    border-color: var(--color-p-500);
+    color: var(--color-p-500);
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background-color: var(--color-p-100);
+}
+
+.btn-secondary:active:not(:disabled) {
+    background-color: var(--color-p-300);
+}
+
+/* Botão Ação (Confirmar) */
+.btn-action {
+    background-color: var(--color-a-600);
+    color: var(--color-white);
+}
+
+.btn-action:hover:not(:disabled) {
+    background-color: var(--color-a-400);
+}
+
+.btn-action:disabled {
+    background-color: var(--color-a-200);
+    cursor: not-allowed;
+}
+
+/* Inputs e Selects */
+.input {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--color-n-300);
+    border-radius: 4px;
+    font-size: 16px;
+    color: var(--color-n-1000);
+    width: 100%;
+}
+
+.input:focus {
+    border-color: var(--color-p-500);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-p-100);
+}
+
+.input::placeholder {
+    color: var(--color-n-500);
+}
+
+/* Estado de Erro */
+.input.error {
+    border-color: var(--color-e-600);
+}
+
+.input.error::placeholder {
+    color: var(--color-e-600);
+}
+
+/* Cards (Geral) */
+.card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-n-300);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 6px #00000018;
+    margin-bottom: 1.5rem;
+}
+
+/* =========================================================================
+   4. Layout Principal e Áreas Específicas
+   ========================================================================= */
+
+.main-content {
+    padding-top: 2rem;
+    padding-bottom: 3rem;
+}
+
+.intro {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.intro p {
+    margin-top: 0.5rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Área de Busca */
+.search-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.input-group input {
+    flex-grow: 1;
+}
+
+/* Listagem de Cards */
+.card-list {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr; /* Mobile: 1 coluna */
+}
+
+.result-card {
+    display: flex;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.result-card:hover {
+    box-shadow: 0 4px 12px #00000025;
+    border-color: var(--color-p-500);
+}
+
+.card-image-container {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-info {
+    flex-grow: 1;
+}
+
+.card-info h3 {
+    margin-bottom: 0.25rem;
+}
+
+.card-info p {
+    margin: 0.1rem 0;
+}
+
+/* Estado Vazio */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    border: 2px dashed var(--color-n-300);
+    border-radius: 12px;
+    background-color: var(--color-white);
+}
+
+.info-message {
+    padding: 0.5rem;
+    border: 1px solid var(--color-i-200);
+    background-color: var(--color-i-200);
+    color: var(--color-i-600);
+    border-radius: 4px;
+}
+
+/* =========================================================================
+   5. Modal de Detalhes
+   ========================================================================= */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none; /* Escondido por padrão */
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.modal.is-visible {
+    display: flex;
+}
+
+.modal-content {
+    background-color: var(--color-white);
+    border-radius: 12px;
+    max-width: 800px;
+    width: 100%;
+    padding: 2rem;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    font-weight: 300;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--color-n-500);
+    line-height: 1;
+}
+
+#modal-map {
+    height: 250px;
+    width: 100%;
+    border-radius: 8px;
+    margin-top: 1rem;
+    border: 1px solid var(--color-n-300);
+}
+
+.detail-image-container {
+    width: 100%;
+    max-height: 300px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+}
+
+.detail-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.residuos-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.residuos-list li {
+    background-color: var(--color-p-100);
+    color: var(--color-p-700);
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 14px;
+}
+
+/* Tabela de Detalhes */
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+.detail-table td {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed var(--color-n-300);
+}
+.detail-table td:first-child {
+    font-weight: 600;
+    color: var(--color-p-700);
+    width: 40%;
+}
+.detail-table td:last-child {
+    text-align: right;
+    color: var(--color-n-700);
+}
+.detail-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Cores de status de caixa coletora */
+.status-sim { color: var(--color-a-600); font-weight: bold; }
+.status-nao { color: var(--color-e-600); font-weight: bold; }
+.status-ni { color: var(--color-n-500); }
+
+
+/* =========================================================================
+   6. Estados de Carregamento (Skeletons e Spinner)
+   ========================================================================= */
+
+/* Spinner (simples) */
+.spinner {
+    border: 4px solid var(--color-n-300);
+    border-top: 4px solid var(--color-p-500);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Skeleton Loader */
+.skeleton-card {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--color-n-300);
+    border-radius: 12px;
+    background-color: var(--color-white);
+    overflow: hidden;
+    position: relative;
+}
+
+.skeleton-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    background-color: var(--color-n-100);
+}
+
+.skeleton-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.skeleton-line {
+    height: 16px;
+    background-color: var(--color-n-100);
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.skeleton-line.h3 {
+    width: 70%;
+    height: 20px;
+}
+.skeleton-line.body1 {
+    width: 90%;
+}
+.skeleton-line.body2 {
+    width: 50%;
+}
+
+/* Efeito de Animação do Skeleton */
+.skeleton-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(to right, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(217, 227, 237, 0.5) 50%, /* N-300 com opacidade */
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: loading-bar 1.5s infinite;
+}
+
+@keyframes loading-bar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* =========================================================================
+   7. Media Queries (Responsividade)
+   ========================================================================= */
+
+/* Tablet e Desktop (Acima de 768px) */
+@media (min-width: 768px) {
+    
+    /* Header e Menu */
+    .menu-toggle {
+        display: none; /* Esconde o hambúrguer */
+    }
+
+    .nav-menu {
+        position: static;
+        display: flex;
+        flex-direction: row;
+        gap: 1.5rem;
+        width: auto;
+        height: auto;
+        padding: 0;
+        box-shadow: none;
+        transform: translateX(0);
+    }
+    
+    .nav-menu a {
+        padding: 0;
+        border-bottom: none;
+        color: var(--color-white);
+    }
+
+    .nav-menu a:hover {
+        background-color: transparent;
+        color: var(--color-p-300);
+        padding-left: 0;
+    }
+
+    .nav-menu .nav-logo {
+        display: none; /* Esconde o logo duplicado no menu desktop */
+    }
+
+    /* Área de Busca */
+    .search-controls {
+        flex-direction: row;
+        align-items: flex-end;
+    }
+    
+    .search-controls label {
+        flex-shrink: 0;
+    }
+
+    #search-type {
+        width: 180px;
+        flex-shrink: 0;
+    }
+
+    .input-group {
+        flex-grow: 1;
+        width: auto;
+    }
+    
+    .input-group input {
+        width: auto;
+        flex-grow: 1;
+    }
+    
+    .input-group button {
+        flex-shrink: 0;
+    }
+
+    /* Listagem de Cards */
+    .card-list {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 2 ou 3 colunas */
+    }
+
+    /* Modal */
+    .modal-content {
+        padding: 2.5rem;
+    }
+}

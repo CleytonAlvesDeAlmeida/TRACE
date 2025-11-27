@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.R.A.C.E. - Rastreamento de Coleta Eletrônica</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo-text"><span class="logo-T">T.R.A.C.E.</span></h1>
+            <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <nav id="nav-menu" class="nav-menu">
+                <a href="#" class="logo-text nav-logo"><span class="logo-T">T.R.A.C.E.</span></a>
+                <a href="#">Sobre</a>
+                <a href="#">Ajuda</a>
+                <a href="#">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content container">
+        <section class="intro">
+            <h2>Tecnologia para Rastreamento de Ambiente de Coleta Eletrônica</h2>
+            <p class="body1">O lixo eletrônico (e-lixo) contém substâncias perigosas e materiais valiosos. Descartá-lo corretamente é crucial para o meio ambiente e a saúde pública, garantindo que seja reciclado ou tratado adequadamente.</p>
+        </section>
+
+        <section class="search-area card">
+            <h3>🔎 Encontre um Ponto de Coleta</h3>
+            <div class="search-controls">
+                <label for="search-type" class="body2">Tipo de Busca:</label>
+                <select id="search-type" class="input">
+                    <option value="bairro">Bairro</option>
+                    <option value="cep">CEP</option>
+                    <option value="geolocation">Localização em tempo real</option>
+                </select>
+
+                <div id="text-search-container" class="input-group">
+                    <input type="text" id="search-input" class="input" placeholder="Digite o Bairro ou CEP..." aria-label="Input de busca">
+                    <button id="search-button" class="btn btn-primary">Buscar</button>
+                </div>
+                
+                <p id="geolocation-message" class="body2 info-message" style="display: none;">
+                    Clique em **Buscar** para solicitar permissão de localização.
+                </p>
+            </div>
+        </section>
+
+        <section class="results-area">
+            <h2>Pontos Encontrados</h2>
+            <div id="loading-spinner" class="spinner" style="display: none;"></div>
+            <div id="results-container" class="card-list">
+                </div>
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <p class="h3">Nenhum ponto encontrado 😕</p>
+                <p class="body1">Tente outro Bairro/CEP ou veja o mapa geral para outros pontos próximos.</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="details-modal" class="modal" aria-hidden="true" role="dialog">
+        <div class="modal-content">
+            <button id="close-modal" class="close-button" aria-label="Fechar detalhes">&times;</button>
+            <div id="modal-body">
+                </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20n6cT5/5Y9+16hM/2v8H3LwQ/qjGgI5tJ6v/1b1u7Q="
+        crossorigin=""></script>
+    <script src="js/utils.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
