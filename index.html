@@ -1,84 +1,176 @@
-<!DOCTYPE html>
+m<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T.R.A.C.E. - Rastreamento de Coleta Eletrônica</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>T.R.A.C.E. - Mapeamento de Pontos de Coleta de Lixo Eletrônico</title>
+    <!-- Leaflet para o Mapa -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossorigin=""/>
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20n6366wzMF40FN3k+1mayXl7aeG1UIn4r0L/E/LzAE="
+            crossorigin=""></script>
+
+    <!-- Fonte Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Link para o CSS principal -->
+    <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <h1 class="logo-text"><span class="logo-T">T.R.A.C.E.</span></h1>
-            <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <nav id="nav-menu" class="nav-menu">
-                <a href="#" class="logo-text nav-logo"><span class="logo-T">T.R.A.C.E.</span></a>
-                <a href="#">Sobre</a>
-                <a href="#">Ajuda</a>
-                <a href="#">Contato</a>
-            </nav>
-        </div>
+    
+    <!-- Navbar -->
+    <header class="navbar">
+        <a href="#" class="logo">T.R.A.C.E.</a>
+        <nav class="navbar-links">
+            <a href="#">Sobre</a>
+            <a href="#">Ajuda</a>
+            <a href="#">Contato</a>
+        </nav>
+        <button class="hamburger-menu" aria-label="Abrir Menu" id="open-sidebar-btn">
+            <!-- Icone SVG de Menu - Assumindo que este SVG será criado em assets/icons/hamburger.svg -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
     </header>
 
-    <main class="main-content container">
-        <section class="intro">
-            <h2>Tecnologia para Rastreamento de Ambiente de Coleta Eletrônica</h2>
-            <p class="body1">O lixo eletrônico (e-lixo) contém substâncias perigosas e materiais valiosos. Descartá-lo corretamente é crucial para o meio ambiente e a saúde pública, garantindo que seja reciclado ou tratado adequadamente.</p>
+    <!-- Sidebar (Menu Hambúrguer) -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="logo">T.R.A.C.E.</span>
+            <button class="close-btn" aria-label="Fechar Menu" id="close-sidebar-btn">
+                &times;
+            </button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="#">Sobre</a></li>
+            <li><a href="#">Ajuda</a></li>
+            <li><a href="#">Contato</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Resumo Curto -->
+        <section id="intro" class="mb-8 mt-4">
+            <h1>Localizador de Ecopontos T.R.A.C.E.</h1>
+            <p class="text-justify text-gray-700">
+                Lixo eletrônico contém materiais tóxicos e valiosos. Descartá-lo corretamente 
+                previne a contaminação do solo e da água, garantindo que componentes sejam reciclados de forma segura e responsável.
+            </p>
         </section>
 
-        <section class="search-area card">
-            <h3>🔎 Encontre um Ponto de Coleta</h3>
+        <!-- Área de Busca -->
+        <section id="search-area" class="card p-6">
+            <h2 class="text-2xl mb-4">Encontre Pontos de Coleta</h2>
+            
             <div class="search-controls">
-                <label for="search-type" class="body2">Tipo de Busca:</label>
-                <select id="search-type" class="input">
-                    <option value="bairro">Bairro</option>
-                    <option value="cep">CEP</option>
-                    <option value="geolocation">Localização em tempo real</option>
+                <!-- Seletor de Opção -->
+                <select id="search-type" class="select-field">
+                    <option value="bairro">Buscar por Bairro</option>
+                    <option value="cep">Buscar por CEP</option>
+                    <option value="geolocation">Localização em Tempo Real</option>
                 </select>
 
-                <div id="text-search-container" class="input-group">
-                    <input type="text" id="search-input" class="input" placeholder="Digite o Bairro ou CEP..." aria-label="Input de busca">
-                    <button id="search-button" class="btn btn-primary">Buscar</button>
-                </div>
+                <!-- Input e Botão (escondidos/mostrados via JS) -->
+                <input type="text" id="search-input" class="input-field" placeholder="Digite o Bairro ou CEP..." aria-label="Campo de busca por localidade">
                 
-                <p id="geolocation-message" class="body2 info-message" style="display: none;">
-                    Clique em **Buscar** para solicitar permissão de localização.
-                </p>
+                <button id="search-button" class="btn-primary btn-base" aria-label="Buscar Pontos de Coleta">
+                    Buscar
+                </button>
+            </div>
+            
+            <!-- Feedback de busca/erro -->
+            <p id="search-feedback" class="caption mt-3 text-center"></p>
+
+        </section>
+
+        <!-- 10. Carregamento Skeleton -->
+        <section id="loading-results" class="mt-8 hidden">
+            <h2 class="text-2xl mb-4">Carregando Pontos...</h2>
+            <div class="result-list">
+                <div class="skeleton-card">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-text-container">
+                        <div class="skeleton-text long"></div>
+                        <div class="skeleton-text medium"></div>
+                        <div class="skeleton-text short"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card hidden md:flex">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-text-container">
+                        <div class="skeleton-text long"></div>
+                        <div class="skeleton-text medium"></div>
+                        <div class="skeleton-text short"></div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section class="results-area">
-            <h2>Pontos Encontrados</h2>
-            <div id="loading-spinner" class="spinner" style="display: none;"></div>
-            <div id="results-container" class="card-list">
-                </div>
-            <div id="empty-state" class="empty-state" style="display: none;">
-                <p class="h3">Nenhum ponto encontrado 😕</p>
-                <p class="body1">Tente outro Bairro/CEP ou veja o mapa geral para outros pontos próximos.</p>
+        <!-- Resultados da Busca -->
+        <section id="results-area" class="mt-8 hidden">
+            <h2 class="text-2xl mb-4">Pontos Encontrados</h2>
+            <div id="result-list" class="result-list">
+                <!-- Cards de resultado serão injetados aqui -->
+            </div>
+            <!-- Estado Vazio -->
+            <div id="empty-state" class="card p-6 text-center hidden">
+                <h3>Nenhum Ponto Encontrado</h3>
+                <p>Tente outra busca ou verifique o mapa geral em uma área de busca maior.</p>
             </div>
         </section>
+
     </main>
 
-    <div id="details-modal" class="modal" aria-hidden="true" role="dialog">
+    <!-- Modal de Detalhes -->
+    <div id="detail-modal-overlay" class="modal-overlay">
         <div class="modal-content">
-            <button id="close-modal" class="close-button" aria-label="Fechar detalhes">&times;</button>
-            <div id="modal-body">
+            <div class="modal-header">
+                <h3 id="detail-name">Detalhes do Ponto de Coleta</h3>
+                <button class="modal-close-btn" aria-label="Fechar Detalhes" id="close-modal-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="detail-image" src="" alt="Imagem do Ponto de Coleta" class="rounded-lg mb-4">
+                
+                <div class="flex flex-col md:flex-row gap-4 mb-4">
+                    <div class="flex-1 space-y-2">
+                        <p class="font-bold text-lg" id="detail-institution"></p>
+                        <p><strong>Endereço:</strong> <span id="detail-address"></span></p>
+                        <p><strong>Bairro/CEP:</strong> <span id="detail-bairro-cep"></span></p>
+                        <p><strong>Caixa Coletora:</strong> <span id="detail-caixa" class="font-bold"></span></p>
+                        <p class="text-sm"><strong>Horários:</strong> <span id="detail-hours"></span></p>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold mb-2">Tipos de Resíduos Aceitos:</p>
+                        <ul id="residuos-list">
+                            <!-- Lista de resíduos -->
+                        </ul>
+                    </div>
                 </div>
+
+                <p class="mt-4">
+                    <strong>Descrição:</strong> 
+                    <span id="detail-description"></span>
+                </p>
+
+                <div id="detail-map"></div>
+                
+            </div>
         </div>
     </div>
+    
+    <!-- Toast de Notificação -->
+    <div id="app-toast" class="toast"></div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20n6cT5/5Y9+16hM/2v8H3LwQ/qjGgI5tJ6v/1b1u7Q="
-        crossorigin=""></script>
-    <script src="js/utils.js"></script>
-    <script src="js/map.js"></script>
-    <script src="js/app.js"></script>
+    <!-- Link para o JavaScript principal -->
+    <script src="assets/js/app.js"></script>
+
 </body>
 </html>
+
