@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.R.A.C.E. - Nossa Equipe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #03264C;
+            --secondary-color: #0455BF;
+            --accent-color: #04C4D9;
+            --eco-green: #2ECC71;
+            --dark-color: #011526;
+            --light-color: #F2F2F2;
+            --neon-glow: 0 0 10px rgba(4, 196, 217, 0.7);
+        }
+
+        body {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Efeito de partículas futuristas */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(4, 196, 217, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        /* Header NÃO FIXADO */
+        header {
+            background: rgba(3, 38, 76, 0.95);
+            padding: 1.2rem 2rem;
+            z-index: 100;
+            border-bottom: 1px solid var(--accent-color);
+            box-shadow: var(--neon-glow);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-placeholder {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--neon-glow);
+            overflow: hidden;
+            flex-shrink: 0; /* Garante que mantém o tamanho */
+        }
+
+        .logo-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, var(--accent-color), var(--eco-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(4, 196, 217, 0.5);
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Section para a página de criadores */
+        .hero-team {
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            height: 80vh;
+            max-height: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-team::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            filter: brightness(0.4);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+            z-index: 1;
+        }
+
+        .hero-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px rgba(4, 196, 217, 0.7);
+        }
+
+        .hero-content h2 span {
+            color: var(--eco-green);
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 6rem 2rem;
+            background: rgba(3, 38, 76, 0.3);
+        }
+
+        .team-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(4, 196, 217, 0.3);
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 2.5rem 2rem;
+            border: 1px solid rgba(4, 196, 217, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--neon-glow);
+        }
+
+        .member-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            overflow: hidden;
+            border: 3px solid var(--accent-color);
+            box-shadow: var(--neon-glow);
+        }
+
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .member-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+        }
+
+        .member-role {
+            font-size: 1.1rem;
+            color: var(--eco-green);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .member-bio {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .member-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            color: white;
+            text-decoration: none;
+        }
+
+        .member-social a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* Mission Section */
+        .mission {
+            padding: 6rem 2rem;
+            background: rgba(3, 38, 76, 0.5);
+        }
+
+        .mission-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .mission-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .mission-text p {
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-color);
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid rgba(4, 196, 217, 0.3);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .footer-column p, .footer-column a {
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Menu Circular Fixo - IDÊNTICO AO INDEX.HTML */
+        .menu-fixed {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+        }
+
+        .menu-wrapper {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .central-circle {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: 2px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: var(--neon-glow);
+            overflow: hidden;
+        }
+
+        .central-circle:hover {
+            transform: scale(1.1);
+            background: var(--secondary-color);
+        }
+
+        .central-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .menu-item {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            border: 2px solid var(--accent-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            /* REMOVIDO: transição que causava animação */
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            z-index: 5;
+            text-decoration: none;
+            color: white;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .menu-item:hover {
+            background: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .menu-item svg {
+            width: 28px;
+            height: 28px;
+            margin-bottom: 2px;
+        }
+
+        .menu-item span {
+            font-size: 0.55rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1;
+            max-width: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Posições dos itens do menu - SEM ANIMAÇÃO (IDÊNTICO AO INDEX.HTML) */
+        .menu-active .menu-item {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .menu-active .menu-item:nth-child(1) {
+            transform: translate(-100px, 0px) scale(1);
+        }
+
+        .menu-active .menu-item:nth-child(2) {
+            transform: translate(-60px, -70px) scale(1);
+        }
+
+        .menu-active .menu-item:nth-child(3) {
+            transform: translate(0px, -100px) scale(1);
+        }
+
+        .menu-active .menu-item:nth-child(4) {
+            transform: translate(60px, -70px) scale(1);
+        }
+
+        .menu-active .menu-item:nth-child(5) {
+            transform: translate(100px, 0px) scale(1);
+        }
+
+        @media (max-width: 968px) {
+            .hero-content h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .menu-wrapper {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .central-circle {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .menu-item {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .menu-item svg {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .menu-item span {
+                font-size: 0.5rem;
+                max-width: 45px;
+            }
+            
+            /* Ajustes para mobile - IDÊNTICO AO INDEX.HTML */
+            .menu-active .menu-item:nth-child(1) {
+                transform: translate(-90px, 0px) scale(1);
+            }
+
+            .menu-active .menu-item:nth-child(2) {
+                transform: translate(-50px, -45px) scale(1);
+            }
+
+            .menu-active .menu-item:nth-child(3) {
+                transform: translate(0px, -80px) scale(1);
+            }
+
+            .menu-active .menu-item:nth-child(4) {
+                transform: translate(50px, -45px) scale(1);
+            }
+
+            .menu-active .menu-item:nth-child(5) {
+                transform: translate(90px, 0px) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Efeito de partículas -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Header NÃO FIXADO -->
+    <header id="home">
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo-placeholder">
+                    <img src="https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/BoGxrHQaUb7lmiLRd7VE/pub/t7YbmKTMJDzpHlpIgeeC.png" alt="Logo T.R.A.C.E.">
+                </div>
+                <div class="logo-text">
+                    <h1>T.R.A.C.E.</h1>
+                    <p>Tecnologia e Reciclagem Ambiental Consciente Eletrônica</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section para a página de criadores -->
+    <section class="hero-team">
+        <div class="hero-content">
+            <h2>Conheça <span>Nossa Equipe</span></h2>
+            <p>Os criadores por trás da T.R.A.C.E. - unindo tecnologia e sustentabilidade</p>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team">
+        <div class="team-container">
+            <div class="section-title">
+                <h2>Nossa Equipe</h2>
+                <p>Conheça as mentes por trás da T.R.A.C.E.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Desenvolvedor Front-end">
+                    </div>
+                    <div class="member-info">
+                        <h3>Carlos Silva</h3>
+                        <div class="member-role">Desenvolvedor Front-end</div>
+                        <p class="member-bio">Responsável pela interface e experiência do usuário. Apaixonado por design responsivo e acessibilidade.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Designer UX/UI">
+                    </div>
+                    <div class="member-info">
+                        <h3>Mariana Santos</h3>
+                        <div class="member-role">Designer UX/UI</div>
+                        <p class="member-bio">Cria experiências intuitivas e visualmente atraentes. Especialista em design centrado no usuário.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-behance"></i></a>
+                            <a href="#"><i class="fab fa-dribbble"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-photo">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Desenvolvedor Back-end">
+                    </div>
+                    <div class="member-info">
+                        <h3>Ricardo Oliveira</h3>
+                        <div class="member-role">Desenvolvedor Back-end</div>
+                        <p class="member-bio">Especialista em sistemas de banco de dados e APIs. Garante que tudo funcione perfeitamente nos bastidores.</p>
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                            <a href="#"><i class="fab fa-stack-overflow"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission">
+        <div class="mission-container">
+            <div class="mission-text">
+                <h2>Nossa Missão</h2>
+                <p>O T.R.A.C.E. nasceu da necessidade urgente de combater o crescente problema do lixo eletrônico. Integramos tecnologia de ponta com conscientização ambiental para criar uma rede inteligente de pontos de coleta.</p>
+                <p>O Brasil é o <strong>quinto maior produtor mundial</strong> de lixo eletrônico, gerando anualmente <strong>2,4 milhões de toneladas</strong>, mas reciclando menos de <strong>3% desse total</strong>. Uma pesquisa mostrou que <strong>85% dos brasileiros</strong> têm algum eletrônico em casa e não sabem como descartar.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>T.R.A.C.E.</h4>
+                <div class="logo-placeholder" style="width: 80px; height: 80px; margin-bottom: 1rem;">
+                    <img src="https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/BoGxrHQaUb7lmiLRd7VE/pub/t7YbmKTMJDzpHlpIgeeC.png" alt="Logo T.R.A.C.E.">
+                </div>
+                <p>Tecnologia e Reciclagem Ambiental Consciente Eletrônica - Integrando inovação e sustentabilidade para um futuro mais verde.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Links Rápidos</h4>
+                <a href="../index.html">Início</a>
+                <a href="buscar.html">Mapa de Coleta</a>
+                <a href="/pags/e-lixo.html">Guia de Reciclagem</a>
+                <a href="#home">Sobre a Equipe</a>
+                <a href="#">Contato</a>
+            </div>
+            <div class="footer-column">
+                <h4>Recursos</h4>
+                <a href="#">O que é e-lixo?</a>
+                <a href="#">Como reciclar</a>
+                <a href="#">Materiais recuperáveis</a>
+                <a href="#">Legislação</a>
+                <a href="#">Parceiros</a>
+            </div>
+            <div class="footer-column">
+                <h4>Contato</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Colégio Estadual de Aplicação Anísio Teixeira</p>
+                <p><i class="fas fa-phone"></i> (71) 9999-9999</p>
+                <p><i class="fas fa-envelope"></i> contato@trace.org.br</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 T.R.A.C.E. - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- Menu Circular Fixo - IDÊNTICO AO INDEX.HTML -->
+    <div class="menu-fixed">
+        <div class="menu-wrapper" id="menuWrapper">
+            <div class="central-circle" id="centralCircle">
+                <img src="https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/BoGxrHQaUb7lmiLRd7VE/pub/t7YbmKTMJDzpHlpIgeeC.png" alt="Logo T.R.A.C.E.">
+            </div>
+            
+            <!-- Menu Principal -->
+            <div class="menu-main" id="menuMain">
+                <a href="../index.html" class="menu-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                    </svg>
+                    <span>Home</span>
+                </a>
+                <a href="/pags/e-lixo.html" class="menu-item">
+                    <svg width="24" height="24" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                        <path d="M20.285 34.582l6.094 3.52l-8.031-14.238L2 24.027l6.098 3.518l-4.894 8.475c-.496.858-1.018 2.248-.294 3.504l8.308 14.387c1.488 2.578 4.08 2.563 5.957 2.563h13.278V41.055H16.547l3.738-6.473"></path>
+                        <path d="M60.567 32.636l-6.64-11.499l-13.353 7.708l6.952 12.042l-7.473-.001v-7.034L31.74 47.925L40.057 62l-.002-7.039h9.783c.992 0 2.458-.243 3.182-1.497l8.307-14.387c1.487-2.58.179-4.815-.76-6.441"></path>
+                        <path d="M32.563 13.044l3.735 6.474l-6.093 3.52l16.347.161l8.031-14.24l-6.095 3.521l-4.891-8.473C43.1 3.148 42.156 2 40.709 2H24.096c-2.978 0-4.261 2.252-5.198 3.878l-6.64 11.499l13.353 7.709l6.952-12.042"></path>
+                    </svg>
+                    <span>E-Lixo</span>
+                </a>
+                <a href="buscar.html" class="menu-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span>Buscar</span>
+                </a>
+                <a href="#home" class="menu-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                    </svg>
+                    <span>Sobre</span>
+                </a>
+                <a href="#" class="menu-item" id="shareButton">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                    </svg>
+                    <span>compart</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar partículas
+        document.addEventListener('DOMContentLoaded', function() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Tamanho e posição aleatórios
+                const size = Math.random() * 5 + 2;
+                const posX = Math.random() * 100;
+                const delay = Math.random() * 15;
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${posX}%`;
+                particle.style.animationDelay = `${delay}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        });
+
+        // Menu circular - IDÊNTICO AO INDEX.HTML
+        document.addEventListener('DOMContentLoaded', function() {
+            const centralCircle = document.getElementById('centralCircle');
+            const menuWrapper = document.getElementById('menuWrapper');
+            const shareButton = document.getElementById('shareButton');
+            
+            centralCircle.addEventListener('click', function() {
+                menuWrapper.classList.toggle('menu-active');
+                
+                // Adiciona uma pequena animação de clique no círculo central
+                this.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    if (!menuWrapper.classList.contains('menu-active')) {
+                        this.style.transform = 'scale(1)';
+                    }
+                }, 150);
+            });
+            
+            // Botão "Compartilhar" - funcionalidade de compartilhamento nativo
+            shareButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Verifica se a API de compartilhamento está disponível
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'T.R.A.C.E. - Nossa Equipe',
+                        text: 'Conheça a equipe por trás do projeto T.R.A.C.E. - Tecnologia e Reciclagem Ambiental Consciente Eletrônica',
+                        url: window.location.href
+                    })
+                    .then(() => console.log('Compartilhado com sucesso!'))
+                    .catch((error) => {
+                        console.log('Erro ao compartilhar:', error);
+                        // Fallback para copiar link
+                        copyToClipboard();
+                    });
+                } else {
+                    // Fallback para copiar link
+                    copyToClipboard();
+                }
+            });
+            
+            // Função para copiar link para área de transferência
+            function copyToClipboard() {
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => {
+                        // Feedback visual
+                        const originalText = shareButton.querySelector('span').textContent;
+                        shareButton.querySelector('span').textContent = 'Copiado!';
+                        setTimeout(() => {
+                            shareButton.querySelector('span').textContent = originalText;
+                        }, 2000);
+                    })
+                    .catch(() => {
+                        // Fallback mais básico
+                        const tempInput = document.createElement('input');
+                        tempInput.value = window.location.href;
+                        document.body.appendChild(tempInput);
+                        tempInput.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(tempInput);
+                        
+                        // Feedback visual
+                        const originalText = shareButton.querySelector('span').textContent;
+                        shareButton.querySelector('span').textContent = 'Copiado!';
+                        setTimeout(() => {
+                            shareButton.querySelector('span').textContent = originalText;
+                        }, 2000);
+                    });
+            }
+            
+            // Fechar o menu ao clicar fora dele
+            document.addEventListener('click', function(event) {
+                if (!menuWrapper.contains(event.target) && menuWrapper.classList.contains('menu-active')) {
+                    menuWrapper.classList.remove('menu-active');
+                    centralCircle.style.transform = 'scale(1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
