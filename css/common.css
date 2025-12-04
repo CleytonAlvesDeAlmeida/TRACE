@@ -19,6 +19,7 @@
     --success-color: #2ECC71;
     --warning-color: #F39C12;
     --error-color: #E74C3C;
+    
 }
 
 body {
@@ -341,5 +342,9 @@ footer {
 
     .menu-active .menu-item:nth-child(5) {
         transform: translate(90px, 0px) scale(1);
+    }
+    
+    .filtros {
+    color: #383838b3;
     }
 }
