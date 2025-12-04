@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.R.A.C.E. - Reciclagem de E-Lixo</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Comum -->
+    <link rel="stylesheet" href="../css/common.css">
+    
+    <!-- CSS Específico para Páginas (equipe e e-lixo) -->
+    <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body>
+    <!-- Efeito de partículas -->
+    <div class="particles" id="particles"></div>
+    
+    <!-- Header -->
+    <header id="home">
+        <div class="header-container">
+            <div class="logo-container">
+                <div class="logo-placeholder">
+                    <img src="https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/BoGxrHQaUb7lmiLRd7VE/pub/t7YbmKTMJDzpHlpIgeeC.png" alt="Logo T.R.A.C.E.">
+                </div>
+                <div class="logo-text">
+                    <h1>T.R.A.C.E.</h1>
+                    <p>Tecnologia e Reciclagem Ambiental Consciente Eletrônica</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-reciclagem">
+        <div class="hero-content">
+            <h2>Reciclagem de <span>Lixo Eletrônico</span></h2>
+            <p>Entenda como descartar corretamente seus eletrônicos e proteger o meio ambiente</p>
+        </div>
+    </section>
+
+    <!-- Introdução -->
+    <section class="introducao">
+        <div class="introducao-container">
+            <div class="introducao-text">
+                <h2>O que é E-Lixo?</h2>
+                <p>Lixo eletrônico, também conhecido como e-lixo ou RAEE (Resíduos de Aparelhos Eletroeletrônicos), refere-se a todos os equipamentos eletroeletrônicos descartados por seus usuários.</p>
+                <p>Estes resíduos contêm tanto materiais valiosos quanto substâncias perigosas, exigindo um tratamento especial para evitar danos ambientais e aproveitar os recursos recuperáveis.</p>
+                <p>O descarte inadequado de e-lixo é um problema global crescente, com impactos significativos na saúde humana e no meio ambiente.</p>
+            </div>
+            <div class="introducao-image"></div>
+        </div>
+    </section>
+
+    <!-- Categorias de E-Lixo -->
+    <section class="categorias">
+        <div class="categorias-container">
+            <div class="section-title">
+                <h2>Categorias de E-Lixo</h2>
+                <p>Classificação dos resíduos eletrônicos por tipo e características</p>
+            </div>
+            
+            <div class="carrossel-categorias">
+                <!-- Linha Branca -->
+                <div class="categoria-card linha-branca">
+                    <div class="categoria-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H7v-2h4v2zm0-4H7v-2h4v2zm0-4H7V7h4v2zm6 8h-4v-2h4v2zm0-4h-4v-2h4v2zm0-4h-4V7h4v2z"/>
+                        </svg>
+                    </div>
+                    <h3>Linha Branca</h3>
+                    <p>Eletrodomésticos de grande porte para uso doméstico</p>
+                    <div class="categoria-exemplos">
+                        Geladeiras, fogões, máquinas de lavar, freezers, ar-condicionado
+                    </div>
+                </div>
+                
+                <!-- Linha Azul -->
+                <div class="categoria-card linha-azul">
+                    <div class="categoria-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>Linha Azul</h3>
+                    <p>Eletrodomésticos portáteis e pequenos eletroportáteis</p>
+                    <div class="categoria-exemplos">
+                        Liquidificadores, batedeiras, secadores, ferros de passar, aspiradores
+                    </div>
+                </div>
+                
+                <!-- Linha Verde -->
+                <div class="categoria-card linha-verde">
+                    <div class="categoria-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M20 18c1.1 0 1.99-.9 1.99-2L22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/>
+                        </svg>
+                    </div>
+                    <h3>Linha Verde</h3>
+                    <p>Equipamentos de informática e telefonia</p>
+                    <div class="categoria-exemplos">
+                        Computadores, notebooks, celulares, tablets, impressoras, modems
+                    </div>
+                </div>
+                
+                <!-- Linha Marrom -->
+                <div class="categoria-card linha-marrom">
+                    <div class="categoria-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9 15c-4.42 0-8-2.69-8-6s3.58-6 8-6 8 2.69 8 6-3.58 6-8 6z"/>
+                        </svg>
+                    </div>
+                    <h3>Linha Marrom</h3>
+                    <p>Equipamentos de áudio e vídeo</p>
+                    <div class="categoria-exemplos">
+                        TVs, aparelhos de som, DVDs, home theaters, câmeras fotográficas
+                    </div>
+                </div>
+                
+                <!-- Subcategorias -->
+                <div class="categoria-card">
+                    <div class="categoria-icon">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>Outros Componentes</h3>
+                    <p>Componentes e acessórios eletrônicos diversos</p>
+                    <div class="subcategorias">
+                        <div class="subcategoria">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+                            </svg>
+                            <span>Baterias e Pilhas</span>
+                        </div>
+                        <div class="subcategoria">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            <span>Cabos e Acessórios</span>
+                        </div>
+                        <div class="subcategoria">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                            </svg>
+                            <span>Peças Avulsas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como Reciclar -->
+    <section class="como-reciclar">
+        <div class="como-reciclar-container">
+            <div class="section-title">
+                <h2>Como Reciclar E-Lixo</h2>
+                <p>Processo de reciclagem do lixo eletrônico, da coleta ao destino final</p>
+            </div>
+            
+            <div class="processo-grid">
+                <div class="processo-card">
+                    <div class="processo-numero">1</div>
+                    <h3>Coleta</h3>
+                    <p>O e-lixo é coletado em pontos específicos como ecopontos, lojas de eletrônicos ou através de serviços de coleta domiciliar.</p>
+                </div>
+                
+                <div class="processo-card">
+                    <div class="processo-numero">2</div>
+                    <h3>Triagem</h3>
+                    <p>Os equipamentos são classificados por tipo e condição para determinar o melhor processo de reciclagem ou reutilização.</p>
+                </div>
+                
+                <div class="processo-card">
+                    <div class="processo-numero">3</div>
+                    <h3>Desmontagem</h3>
+                    <p>Os aparelhos são desmontados manualmente para separar componentes perigosos e materiais recicláveis.</p>
+                </div>
+                
+                <div class="processo-card">
+                    <div class="processo-numero">4</div>
+                    <h3>Recuperação</h3>
+                    <p>Materiais como metais, plásticos e vidro são processados e preparados para serem reinseridos na cadeia produtiva.</p>
+                </div>
+                
+                <div class="processo-card">
+                    <div class="processo-numero">5</div>
+                    <h3>Destino Final</h3>
+                    <p>Materiais perigosos são tratados adequadamente, enquanto os recicláveis são enviados para indústrias como matéria-prima.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Riscos do Descarte Incorreto -->
+    <section class="riscos">
+        <div class="riscos-container">
+            <div class="section-title">
+                <h2>Riscos do Descarte Incorreto</h2>
+                <p>Perigos associados ao descarte inadequado do lixo eletrônico</p>
+            </div>
+            
+            <div class="riscos-grid">
+                <div class="risco-card">
+                    <h3><i class="fas fa-skull-crossbones"></i> Metais Pesados</h3>
+                    <p>Chumbo, mercúrio, cádmio e outros metais tóxicos presentes em eletrônicos podem contaminar solo e água, causando danos neurológicos, renais e ósseos em humanos e animais.</p>
+                </div>
+                
+                <div class="risco-card">
+                    <h3><i class="fas fa-tint"></i> Contaminação da Água</h3>
+                    <p>Substâncias químicas podem infiltrar-se no solo e atingir lençóis freáticos, contaminando fontes de água potável e afetando ecossistemas aquáticos.</p>
+                </div>
+                
+                <div class="risco-card">
+                    <h3><i class="fas fa-lungs"></i> Problemas Respiratórios</h3>
+                    <p>A queima de componentes eletrônicos libera gases tóxicos que podem causar doenças respiratórias, alergias e até câncer.</p>
+                </div>
+                
+                <div class="risco-card">
+                    <h3><i class="fas fa-seedling"></i> Degradação do Solo</h3>
+                    <p>Metais pesados e produtos químicos podem tornar o solo improdutivo, afetando a agricultura e a vegetação local por décadas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefícios -->
+    <section class="beneficios">
+        <div class="beneficios-container">
+            <div class="section-title">
+                <h2>Benefícios da Reciclagem</h2>
+                <p>Vantagens ambientais, econômicas e sociais do descarte correto</p>
+            </div>
+            
+            <div class="beneficios-grid">
+                <div class="beneficio-card">
+                    <h3><i class="fas fa-recycle"></i> Economia Circular</h3>
+                    <p>Reciclar e-lixo promove a reutilização de materiais, reduzindo a extração de recursos naturais e fechando o ciclo de produção.</p>
+                </div>
+                
+                <div class="beneficio-card">
+                    <h3><i class="fas fa-gem"></i> Recuperação de Metais</h3>
+                    <p>Um smartphone contém pequenas quantidades de ouro, prata, cobre e platina. Reciclar 1 milhão de celulares recupera 16 toneladas de cobre, 350 kg de prata e 34 kg de ouro.</p>
+                </div>
+                
+                <div class="beneficio-card">
+                    <h3><i class="fas fa-mountain"></i> Redução da Mineração</h3>
+                    <p>A reciclagem de e-lixo reduz a necessidade de mineração, atividade extremamente impactante ao meio ambiente.</p>
+                </div>
+                
+                <div class="beneficio-card">
+                    <h3><i class="fas fa-bolt"></i> Economia de Energia</h3>
+                    <p>Produzir alumínio a partir de reciclagem consome 95% menos energia do que produzi-lo a partir da bauxita.</p>
+                </div>
+                
+                <div class="beneficio-card">
+                    <h3><i class="fas fa-users"></i> Geração de Empregos</h3>
+                    <p>A indústria de reciclagem cria empregos em coleta, triagem, processamento e manufatura de produtos reciclados.</p>
+                </div>
+                
+                <div class="beneficio-card">
+                    <h3><i class="fas fa-shield-alt"></i> Proteção Ambiental</h3>
+                    <p>Evita a contaminação do solo, água e ar, protegendo ecossistemas e a saúde pública.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <div class="cta-container">
+            <h2>Faça a Diferença!</h2>
+            <p>Descarte seus eletrônicos de forma correta e ajude a construir um futuro mais sustentável. Encontre o ponto de coleta mais próximo de você e contribua para a preservação do meio ambiente.</p>
+            
+            <div class="cta-buttons">
+                <a href="../index.html" class="action-button primary">
+                    <i class="fas fa-search-location"></i>
+                    Encontrar Ponto de Coleta
+                </a>
+                <a href="../index.html" class="action-button secondary">
+                    <i class="fas fa-home"></i>
+                    Voltar para o Início
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>T.R.A.C.E.</h4>
+                <div class="logo-placeholder" style="width: 80px; height: 80px; margin-bottom: 1rem;">
+                    <img src="https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/BoGxrHQaUb7lmiLRd7VE/pub/t7YbmKTMJDzpHlpIgeeC.png" alt="Logo T.R.A.C.E.">
+                </div>
+                <p>Tecnologia e Reciclagem Ambiental Consciente Eletrônica - Integrando inovação e sustentabilidade para um futuro mais verde.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Links Rápidos</h4>
+                <a href="../index.html">Início</a>
+                <a href="../index.html">Mapa de Coleta</a>
+                <a href="#home">Guia de Reciclagem</a>
+                <a href="equipe.html">Sobre a Equipe</a>
+                <a href="#">Contato</a>
+            </div>
+            <div class="footer-column">
+                <h4>Recursos</h4>
+                <a href="#">O que é e-lixo?</a>
+                <a href="#">Como reciclar</a>
+                <a href="#">Materiais recuperáveis</a>
+                <a href="#">Legislação</a>
+                <a href="#">Parceiros</a>
+            </div>
+            <div class="footer-column">
+                <h4>Contato</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Colégio Estadual de Aplicação Anísio Teixeira</p>
+                <p><i class="fas fa-phone"></i> (71) 9999-9999</p>
+                <p><i class="fas fa-envelope"></i> contato@trace.org.br</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 T.R.A.C.E. - Todos os direitos reservados</p>
+        </div>
+    </footer>
+
+    <!-- Menu Circular Fixo -->
+    <div class="menu-fixed">
+        <div class="menu-wrapper" id="menuWrapper">
+            <div class="central-circle" id="centralCircle">
+                <img src="https://storage.googleapis.com/glide-prod.appspot.com/uploads-v2/BoGxrHQaUb7lmiLRd7VE/pub/t7YbmKTMJDzpHlpIgeeC.png" alt="Logo T.R.A.C.E.">
+            </div>
+            
+            <!-- Menu Principal -->
+            <div class="menu-main" id="menuMain">
+                <!-- Botão Instalar (substituiu o Home) -->
+                <a href="#" class="menu-item" id="installButton">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                    </svg>
+                    <span>Instalar</span>
+                </a>
+                <a href="#home" class="menu-item">
+                    <svg width="24" height="24" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                        <path d="M20.285 34.582l6.094 3.52l-8.031-14.238L2 24.027l6.098 3.518l-4.894 8.475c-.496.858-1.018 2.248-.294 3.504l8.308 14.387c1.488 2.578 4.08 2.563 5.957 2.563h13.278V41.055H16.547l3.738-6.473"></path>
+                        <path d="M60.567 32.636l-6.64-11.499l-13.353 7.708l6.952 12.042l-7.473-.001v-7.034L31.74 47.925L40.057 62l-.002-7.039h9.783c.992 0 2.458-.243 3.182-1.497l8.307-14.387c1.487-2.58.179-4.815-.76-6.441"></path>
+                        <path d="M32.563 13.044l3.735 6.474l-6.093 3.52l16.347.161l8.031-14.240l-6.095 3.521l-4.891-8.473C43.1 3.148 42.156 2 40.709 2H24.096c-2.978 0-4.261 2.252-5.198 3.878l-6.64 11.499l13.353 7.709l6.952-12.042"></path>
+                    </svg>
+                    <span>E-Lixo</span>
+                </a>
+                <a href="../index.html" class="menu-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                    <span>Buscar</span>
+                </a>
+                <a href="equipe.html" class="menu-item">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                    </svg>
+                    <span>Sobre</span>
+                </a>
+                <a href="#" class="menu-item" id="shareButton">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                    </svg>
+                    <span>compart</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/particles.js"></script>
+    <script src="../js/common.js"></script>
+</body>
+</html>
