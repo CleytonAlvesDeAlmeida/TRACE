@@ -152,7 +152,7 @@
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(4, 196, 217, 0.3);
     border-radius: 8px;
-    color: var(--filtro-glow);
+    color: var(--filtro-color);
     font-size: 1rem;
     appearance: none;
     cursor: pointer;
