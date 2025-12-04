@@ -117,6 +117,7 @@
 
 /* Seção de Filtros */
 .filtros {
+    color: #383838b3; 
     padding: 4rem 2rem;
     background: rgba(3, 38, 76, 0.3);
 }
