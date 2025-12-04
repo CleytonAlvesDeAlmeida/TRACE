@@ -1,0 +1,644 @@
+/* css/pages.css */
+
+/* ==================== */
+/* ESTILOS DA PÁGINA EQUIPE */
+/* ==================== */
+
+/* Hero Section para a página de criadores */
+.hero-team {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    height: 80vh;
+    max-height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-team::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+    filter: brightness(0.4);
+    z-index: -1;
+}
+
+.hero-content {
+    max-width: 800px;
+    padding: 2rem;
+    z-index: 1;
+}
+
+.hero-content h2 {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 0 15px rgba(4, 196, 217, 0.7);
+}
+
+.hero-content h2 span {
+    color: var(--eco-green);
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* Team Section */
+.team {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.3);
+}
+
+.team-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(4, 196, 217, 0.3);
+}
+
+.section-title p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+}
+
+.team-member {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2.5rem 2rem;
+    border: 1px solid rgba(4, 196, 217, 0.2);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--neon-glow);
+}
+
+.member-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    overflow: hidden;
+    border: 3px solid var(--accent-color);
+    box-shadow: var(--neon-glow);
+}
+
+.member-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.member-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.member-role {
+    font-size: 1.1rem;
+    color: var(--eco-green);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.member-bio {
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.member-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 1.5rem;
+}
+
+.member-social a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: white;
+    text-decoration: none;
+}
+
+.member-social a:hover {
+    background: var(--accent-color);
+    transform: translateY(-3px);
+}
+
+/* Mission Section */
+.mission {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.5);
+}
+
+.mission-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.mission-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent-color);
+}
+
+.mission-text p {
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ==================== */
+/* ESTILOS DA PÁGINA E-LIXO */
+/* ==================== */
+
+/* Hero Section */
+.hero-reciclagem {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    height: 80vh;
+    max-height: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-reciclagem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+    filter: brightness(0.4);
+    z-index: -1;
+}
+
+/* Introdução */
+.introducao {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.3);
+}
+
+.introducao-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.introducao-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent-color);
+}
+
+.introducao-text p {
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+}
+
+.introducao-image {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--neon-glow);
+    height: 400px;
+    background: url('https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.introducao-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(3, 38, 76, 0.4), rgba(4, 196, 217, 0.2));
+}
+
+/* Categorias de E-Lixo - Carrossel Horizontal */
+.categorias {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.5);
+}
+
+.categorias-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.carrossel-categorias {
+    display: flex;
+    overflow-x: auto;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) rgba(255, 255, 255, 0.1);
+}
+
+.carrossel-categorias::-webkit-scrollbar {
+    height: 8px;
+}
+
+.carrossel-categorias::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.carrossel-categorias::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+
+.categoria-card {
+    min-width: 220px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1.5rem;
+    border: 1px solid rgba(4, 196, 217, 0.2);
+    transition: all 0.3s ease;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.categoria-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--neon-glow);
+}
+
+.categoria-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.categoria-icon svg {
+    width: 35px;
+    height: 35px;
+}
+
+.categoria-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+}
+
+.categoria-card p {
+    line-height: 1.6;
+    opacity: 0.9;
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+}
+
+.categoria-exemplos {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.linha-branca {
+    border-top: 4px solid white;
+}
+
+.linha-azul {
+    border-top: 4px solid #0455BF;
+}
+
+.linha-verde {
+    border-top: 4px solid var(--eco-green);
+}
+
+.linha-marrom {
+    border-top: 4px solid #8B4513;
+}
+
+.subcategorias {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.subcategoria {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0.6rem;
+    font-size: 0.85rem;
+}
+
+.subcategoria svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* Como Reciclar */
+.como-reciclar {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.3);
+}
+
+.como-reciclar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.processo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.processo-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2rem;
+    border: 1px solid rgba(4, 196, 217, 0.2);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.processo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(4, 196, 217, 0.4);
+}
+
+.processo-numero {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--accent-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--dark-color);
+}
+
+.processo-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.processo-card p {
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* Riscos */
+.riscos {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.5);
+}
+
+.riscos-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.riscos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.risco-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 107, 107, 0.2);
+    transition: all 0.3s ease;
+}
+
+.risco-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
+}
+
+.risco-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #FF6B6B;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.risco-card h3 i {
+    font-size: 1.5rem;
+}
+
+.risco-card p {
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* Benefícios */
+.beneficios {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.3);
+}
+
+.beneficios-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.beneficios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.beneficio-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2rem;
+    border: 1px solid rgba(46, 204, 113, 0.2);
+    transition: all 0.3s ease;
+}
+
+.beneficio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.4);
+}
+
+.beneficio-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--eco-green);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.beneficio-card h3 i {
+    font-size: 1.5rem;
+}
+
+.beneficio-card p {
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* Call to Action */
+.cta {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.5);
+    text-align: center;
+}
+
+.cta-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent-color);
+}
+
+.cta p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.action-button {
+    padding: 1.2rem 2.5rem;
+    border-radius: 50px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: var(--neon-glow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.action-button.primary {
+    background: linear-gradient(to right, var(--accent-color), var(--eco-green));
+    color: var(--dark-color);
+}
+
+.action-button.secondary {
+    background: linear-gradient(to right, #FF6B6B, #FFA36C);
+    color: white;
+}
+
+.action-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(4, 196, 217, 0.9);
+}
+
+.action-button.secondary:hover {
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.7);
+}
+
+/* Responsividade para páginas específicas */
+@media (max-width: 968px) {
+    .hero-team .hero-content h2,
+    .hero-reciclagem .hero-content h2 {
+        font-size: 2.5rem;
+    }
+    
+    .introducao-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-team .hero-content h2,
+    .hero-reciclagem .hero-content h2 {
+        font-size: 2.2rem;
+    }
+    
+    .hero-team .hero-content p,
+    .hero-reciclagem .hero-content p {
+        font-size: 1.1rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .action-button {
+        min-width: 250px;
+        width: 100%;
+        max-width: 300px;
+    }
+}
