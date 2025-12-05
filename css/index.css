@@ -247,7 +247,7 @@
 
 .section-title h2 {
     font-size: 2.5rem;
-    color: var(--light-color);
+    color: var(--accent-color);
     margin-bottom: 1rem;
     text-shadow: 0 0 10px rgba(4, 196, 217, 0.3);
 }
@@ -621,6 +621,32 @@
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+    /* Estilos para o link informativo das linhas */
+
+.linha-info-link {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--light-color);
+}
+
+.linha-link {
+    color: var(--eco-green);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    align-items: center;
+}
+
+.linha-link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
+}
+
+.linha-link i {
+    font-size: 0.8rem;
 }
 
 /* Responsividade específica */
