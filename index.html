@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>T.R.A.C.E. - Buscar Pontos de Coleta</title>
+    <title>T.R.A.C.E. - Buscar Pontos de Coleta de lixo eletrônico</title>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -16,10 +16,16 @@
     
     <!-- CSS Específico da Página -->
     <link rel="stylesheet" href="css/index.css">
-
-    <link rel="icon" href="icon-512.png" type="image/png">
-    <link rel="apple-touch-icon" href="icon-512.png">
-    <meta  name="msapplication-TileImage" content="icon-512.png">
+    
+  <!-- Para compatibilidade com diferentes navegadores -->
+  <link rel="icon" href="/assets/icon-512.png" type="image/png">
+  
+  <!-- Para Apple devices -->
+  <link rel="apple-touch-icon" href="/assets/icon-512.png">
+  
+  <!-- Para Windows/IE -->
+  <meta name="msapplication-TileImage" content="/assets/icon-512.png">
+    
 </head>
 <body>
     <!-- Efeito de partículas -->
@@ -37,7 +43,7 @@
                 </div>
                 <div class="logo-text">
                     <h1>T.R.A.C.E.</h1>
-                    <p>Tecnologia e Reciclagem Ambiental Consciente Eletrônica</p>
+                    <p>Tecnologia para Rastreamento de Ambientes de Coleta Eletrônica</p>
                 </div>
             </div>
         </div>
@@ -78,6 +84,13 @@
         <div class="filtros-container">
             <div class="filtro-grupo">
                 <h3>Selecione o tipo de resíduo eletrônico:</h3>
+                <p class="linha-info-link">Não sabe qual é a linha do seu resíduo? 
+                    <a href="pages/e-lixo.html#categorias-e-lixo" target="_blank" class="linha-link">
+                        Clique aqui
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </p>
+                <br>
                 <div class="select-container">
                     <select id="selectLinha">
                         <option value="">Selecione uma linha</option>
@@ -191,8 +204,8 @@
                 <h4>Links Rápidos</h4>
                 <a href="../index.html">Início</a>
                 <a href="#home">Buscar Pontos</a>
-                <a href="pags/e-lixo.html">Guia de Reciclagem</a>
-                <a href="pags/equipe.html">Sobre a Equipe</a>
+                <a href="pages/e-lixo.html">Guia de Reciclagem</a>
+                <a href="pages/equipe.html">Sobre a Equipe</a>
                 <a href="#">Contato</a>
             </div>
             <div class="footer-column">
@@ -230,7 +243,7 @@
                     </svg>
                     <span>Instalar</span>
                 </a>
-                <a href="pags/e-lixo.html" class="menu-item">
+                <a href="pages/e-lixo.html" class="menu-item">
                     <svg width="24" height="24" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
                         <path d="M20.285 34.582l6.094 3.52l-8.031-14.238L2 24.027l6.098 3.518l-4.894 8.475c-.496.858-1.018 2.248-.294 3.504l8.308 14.387c1.488 2.578 4.08 2.563 5.957 2.563h13.278V41.055H16.547l3.738-6.473"></path>
                         <path d="M60.567 32.636l-6.64-11.499l-13.353 7.708l6.952 12.042l-7.473-.001v-7.034L31.74 47.925L40.057 62l-.002-7.039h9.783c.992 0 2.458-.243 3.182-1.497l8.307-14.387c1.487-2.58.179-4.815-.76-6.441"></path>
@@ -244,7 +257,7 @@
                     </svg>
                     <span>Buscar</span>
                 </a>
-                <a href="pags/equipe.html" class="menu-item">
+                <a href="pages/equipe.html" class="menu-item">
                     <svg viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
                     </svg>
