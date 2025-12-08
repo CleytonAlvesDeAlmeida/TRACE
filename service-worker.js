@@ -5,8 +5,8 @@ const FILES_TO_CACHE = [
   "/index.html",
   "/offline.html",
   "/manifest.json",
-  "/assets/icon-512.png",
-  "/assets/icon-192.png"
+  "/assets/icon-192.png",
+  "/assets/icon-512.png"
 ];
 
 // INSTALAÇÃO
