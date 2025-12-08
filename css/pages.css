@@ -51,6 +51,237 @@
     opacity: 0.9;
 }
 
+/* ==================== */
+/* NOVAS SEÇÕES PARA EQUIPE */
+/* ==================== */
+
+/* Problematização */
+.problematica {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.5);
+}
+
+.problematica-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.problematica-content p {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.problemas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.problema-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid rgba(255, 107, 107, 0.2);
+    transition: all 0.3s ease;
+}
+
+.problema-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
+}
+
+.problema-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255, 107, 107, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.problema-icon i {
+    font-size: 2rem;
+    color: #FF6B6B;
+}
+
+.problema-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #FF6B6B;
+}
+
+.problema-card p {
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* Solução */
+.solucao {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.3);
+}
+
+.solucao-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.solucao-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.solucao-text p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.destaque {
+    background: rgba(4, 196, 217, 0.1);
+    border-left: 4px solid var(--accent-color);
+    padding: 1.5rem;
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.destaque i {
+    font-size: 2rem;
+    color: var(--accent-color);
+    flex-shrink: 0;
+}
+
+.destaque p {
+    margin: 0;
+    text-align: left;
+}
+
+/* Objetivos */
+.objetivos {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.5);
+}
+
+.objetivos-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.objetivo-principal {
+    background: rgba(46, 204, 113, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.objetivo-principal h3 {
+    font-size: 1.5rem;
+    color: var(--eco-green);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.objetivo-principal p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.objetivos-grid h3 {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.objetivos-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.objetivo-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid rgba(4, 196, 217, 0.2);
+    transition: all 0.3s ease;
+}
+
+.objetivo-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 10px rgba(4, 196, 217, 0.4);
+}
+
+.objetivo-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(4, 196, 217, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.objetivo-icon i {
+    font-size: 1.5rem;
+    color: var(--accent-color);
+}
+
+.objetivo-text h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-color);
+}
+
+.objetivo-text p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.9;
+}
+
+/* Equipe Intro */
+.equipe-intro {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.equipe-intro h3 {
+    font-size: 1.8rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.equipe-intro p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
 /* Team Section */
 .team {
     padding: 6rem 2rem;
@@ -159,6 +390,71 @@
 .member-social a:hover {
     background: var(--accent-color);
     transform: translateY(-3px);
+}
+
+/* Resultados Esperados */
+.resultados {
+    padding: 6rem 2rem;
+    background: rgba(3, 38, 76, 0.3);
+}
+
+.resultados-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.resultados-container .section-title p {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    font-size: 1.1rem;
+}
+
+.resultados-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.resultado-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    border: 1px solid rgba(4, 196, 217, 0.2);
+    transition: all 0.3s ease;
+}
+
+.resultado-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--neon-glow);
+}
+
+.resultado-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(4, 196, 217, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.resultado-icon i {
+    font-size: 2rem;
+    color: var(--accent-color);
+}
+
+.resultado-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.resultado-card p {
+    line-height: 1.6;
+    opacity: 0.9;
 }
 
 /* Mission Section */
@@ -607,7 +903,10 @@
     box-shadow: 0 0 20px rgba(255, 107, 107, 0.7);
 }
 
-/* Responsividade para páginas específicas */
+/* ==================== */
+/* RESPONSIVIDADE */
+/* ==================== */
+
 @media (max-width: 968px) {
     .hero-team .hero-content h2,
     .hero-reciclagem .hero-content h2 {
@@ -640,5 +939,44 @@
         min-width: 250px;
         width: 100%;
         max-width: 300px;
+    }
+    
+    /* Responsividade para novas seções */
+    .problemas-grid,
+    .objetivos-list,
+    .resultados-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .destaque {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .destaque i {
+        margin-bottom: 0.5rem;
+    }
+    
+    .objetivo-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .equipe-intro h3 {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .introducao-image {
+        height: 300px;
+    }
+    
+    .riscos-grid,
+    .beneficios-grid {
+        grid-template-columns: 1fr;
     }
 }
