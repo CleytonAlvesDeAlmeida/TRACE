@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>TRACE — Jogo Offline</title>
 
   <!-- Para compatibilidade com diferentes navegadores -->
@@ -13,13 +13,12 @@
   
   <!-- Para Windows/IE -->
   <meta name="msapplication-TileImage" content="/assets/icon-512.png">
-
+  
   <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#03264C">
 
 <link rel="apple-touch-icon" href="/assets/icon-512.png">
 <script src="/registerSW.js"></script>
-
   
 <style>
   * {
@@ -301,6 +300,53 @@
     font-weight: 800;
     color: #2ECC71;
     text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+  }
+
+  /* Última partida */
+  .last-game-container {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(155, 89, 182, 0.4);
+    border-radius: 10px;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1rem;
+    margin-top: 5px;
+    box-shadow: 0 0 12px rgba(155, 89, 182, 0.3);
+    width: 90%;
+    max-width: 380px;
+    display: none; /* Inicialmente oculto */
+  }
+
+  .last-game-label {
+    font-size: 0.8rem;
+    color: #9B59B6;
+    margin-bottom: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .last-game-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    text-align: left;
+  }
+
+  .last-game-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.1rem 0.3rem;
+  }
+
+  .last-game-stat-label {
+    color: #FFD700;
+  }
+
+  .last-game-stat-value {
+    color: #00C4FF;
+    font-weight: bold;
   }
 
   /* ========== MODAL DE INSTRUÇÕES ========== */
@@ -653,6 +699,27 @@
     background: #00b4d8;
     transform: translateY(-2px);
     box-shadow: 0 0 20px rgba(4, 196, 217, 0.5);
+  }
+
+  /* Botão específico para voltar ao menu principal */
+  .menu-main-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #E74C3C;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .menu-main-button:hover {
+    background: #C0392B;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px rgba(231, 76, 60, 0.5);
   }
 
   /* ========== Interface do Jogo ========== */
@@ -1203,6 +1270,11 @@
       max-width: 400px;
     }
     
+    .last-game-container {
+      padding: 1rem 1.5rem;
+      max-width: 400px;
+    }
+    
     .instructions-container {
       max-width: 500px;
       padding: 2.2rem;
@@ -1293,6 +1365,10 @@
     
     .menu-button {
       padding: 1.2rem;
+    }
+    
+    .last-game-container {
+      max-width: 360px;
     }
     
     .instructions-container {
@@ -1407,6 +1483,16 @@
       font-size: 1.4rem;
     }
     
+    .last-game-container {
+      padding: 0.7rem 1rem;
+      margin-bottom: 0.8rem;
+      max-width: 300px;
+    }
+    
+    .last-game-stats {
+      font-size: 0.7rem;
+    }
+    
     .instructions-container {
       padding: 1.2rem;
       max-height: 80vh;
@@ -1484,6 +1570,12 @@
       padding: 10px;
       font-size: 0.95rem;
       margin-top: 12px;
+    }
+    
+    .menu-main-button {
+      padding: 10px;
+      font-size: 0.95rem;
+      margin-top: 10px;
     }
     
     #gameUI {
@@ -1629,6 +1721,17 @@
       font-size: 1.1rem;
     }
     
+    .last-game-container {
+      width: 30%;
+      margin-top: 0;
+      padding: 0.5rem 0.7rem;
+    }
+    
+    .last-game-stats {
+      font-size: 0.6rem;
+      grid-template-columns: 1fr;
+    }
+    
     .instructions-container {
       max-height: 90vh;
       padding: 1rem;
@@ -1765,6 +1868,11 @@
       padding: 8px;
       margin-top: 10px;
     }
+    
+    .menu-main-button {
+      padding: 8px;
+      margin-top: 8px;
+    }
   }
 
   /* Ajustes específicos para o menu inicial */
@@ -1795,6 +1903,10 @@
     
     .high-score-container {
       margin-bottom: 0.5rem;
+    }
+    
+    .last-game-container {
+      margin-bottom: 0.8rem;
     }
   }
 </style>
@@ -1852,6 +1964,17 @@
       <span>SEU RECORDE</span>
     </div>
     <div class="high-score-value" id="highScoreDisplay">0</div>
+  </div>
+  
+  <!-- Última partida -->
+  <div id="lastGameContainer" class="last-game-container">
+    <div class="last-game-label">
+      <i class="fas fa-history"></i>
+      <span>ÚLTIMA PARTIDA</span>
+    </div>
+    <div class="last-game-stats" id="lastGameStats">
+      <!-- As estatísticas serão preenchidas por JavaScript -->
+    </div>
   </div>
 </div>
 
@@ -1989,7 +2112,10 @@
       <div class="settings-subtitle">Ajuste o jogo ao seu estilo</div>
     </div>
     
+    <a href="/"><button class="menu-main-button" onclick="backToMenu()">VOLTAR AO MENU PRINCIPAL</button></a>
+    
     <div class="settings-section">
+      <br>
       <label class="settings-label">Nível de Dificuldade:</label>
       <div class="settings-options">
         <button class="settings-btn" data-setting="difficulty" data-value="easy" onclick="setDifficulty('easy')">FÁCIL</button>
@@ -2055,7 +2181,7 @@
       </div>
     </div>
     
-    <button class="settings-back-button" onclick="closeSettings()">VOLTAR AO MENU</button>
+    <button class="settings-back-button" onclick="closeSettings()">VOLTAR AO JOGO</button>
   </div>
 </div>
 
@@ -2120,7 +2246,7 @@
   const gameUI = document.getElementById("gameUI");
   const controls = document.getElementById("controls");
   const message = document.getElementById("message");
-  const retryBtn = document.getElementById("retryBtn");
+  const retryBtn = document.getElementById("settingsMenu");
   const scoreDisplay = document.getElementById("scoreDisplay");
   const timeDisplay = document.getElementById("timeDisplay");
   const bossKillsDisplay = document.getElementById("bossKillsDisplay");
@@ -2141,6 +2267,8 @@
   const platformTabs = document.querySelectorAll('.platform-tab');
   const pcInstructions = document.getElementById('pcInstructions');
   const mobileInstructions = document.getElementById('mobileInstructions');
+  const lastGameContainer = document.getElementById("lastGameContainer");
+  const lastGameStats = document.getElementById("lastGameStats");
   
   // Novos elementos para configurações de guardas
   const guardSpeedSlider = document.getElementById("guardSpeedSlider");
@@ -2259,6 +2387,9 @@
     loadSettings();
     createMenuParticles();
     
+    // Carregar e exibir dados da última partida
+    loadLastGameStats();
+    
     // Criar indicador de toque
     touchIndicator = document.createElement('div');
     touchIndicator.className = 'touch-indicator';
@@ -2269,6 +2400,66 @@
     
     // Adicionar evento para tecla B
     document.addEventListener('keydown', handleKeyDown);
+  }
+
+  // ========== FUNÇÕES PARA ÚLTIMA PARTIDA ==========
+  function saveLastGameStats() {
+    const lastGame = {
+      score: Math.floor(score),
+      time: formattedTime,
+      bosses: bossKills,
+      multiplier: bossBuffMultiplier.toFixed(1),
+      date: new Date().toLocaleDateString('pt-BR'),
+      timestamp: Date.now()
+    };
+    
+    localStorage.setItem('bossBattleLastGame', JSON.stringify(lastGame));
+  }
+
+  function loadLastGameStats() {
+    const lastGameData = localStorage.getItem('bossBattleLastGame');
+    
+    if (lastGameData) {
+      try {
+        const lastGame = JSON.parse(lastGameData);
+        
+        // Verificar se os dados são recentes (últimos 7 dias)
+        const oneWeekAgo = Date.now() - (7 * 24 * 60 * 60 * 1000);
+        if (lastGame.timestamp && lastGame.timestamp > oneWeekAgo) {
+          // Atualizar a interface com os dados da última partida
+          lastGameStats.innerHTML = `
+            <div class="last-game-stat">
+              <span class="last-game-stat-label">Pontos:</span>
+              <span class="last-game-stat-value">${lastGame.score}</span>
+            </div>
+            <div class="last-game-stat">
+              <span class="last-game-stat-label">Tempo:</span>
+              <span class="last-game-stat-value">${lastGame.time}</span>
+            </div>
+            <div class="last-game-stat">
+              <span class="last-game-stat-label">Bosses:</span>
+              <span class="last-game-stat-value">${lastGame.bosses}</span>
+            </div>
+            <div class="last-game-stat">
+              <span class="last-game-stat-label">Multiplicador:</span>
+              <span class="last-game-stat-value">x${lastGame.multiplier}</span>
+            </div>
+          `;
+          
+          // Mostrar o container
+          lastGameContainer.style.display = 'block';
+        } else {
+          // Dados muito antigos, ocultar o container
+          lastGameContainer.style.display = 'none';
+        }
+      } catch (e) {
+        console.error("Erro ao carregar dados da última partida:", e);
+        lastGameContainer.style.display = 'none';
+      }
+    } else {
+      // Sem dados da última partida
+      lastGameContainer.style.display = 'none';
+    }
   }
 
   function handleKeyDown(e) {
@@ -2561,8 +2752,9 @@
     updateSoundUI(enabled);
   }
 
-  // ========== FUNÇÃO VOLTAR AO MENU ==========
+  // ========== FUNÇÃO VOLTAR AO MENU PRINCIPAL ==========
   function backToMenu() {
+    // Parar todos os intervalos
     if (powerUpInterval) {
       clearInterval(powerUpInterval);
       powerUpInterval = null;
@@ -2576,14 +2768,16 @@
       guardSpawnInterval = null;
     }
     
+    // Remover todos os elementos do jogo
     if (boss) boss.remove();
-    bullets.forEach(b => b.el.remove());
-    playerBullets.forEach(b => b.el.remove());
-    powerUps.forEach(p => p.remove());
-    particles.forEach(p => p.el.remove());
-    guards.forEach(g => g.el.remove());
-    guardBullets.forEach(g => g.el.remove());
+    bullets.forEach(b => b.el?.remove());
+    playerBullets.forEach(b => b.el?.remove());
+    powerUps.forEach(p => p?.remove());
+    particles.forEach(p => p.el?.remove());
+    guards.forEach(g => g.el?.remove());
+    guardBullets.forEach(g => g.el?.remove());
     
+    // Limpar arrays
     boss = null;
     bullets = [];
     playerBullets = [];
@@ -2592,6 +2786,7 @@
     guards = [];
     guardBullets = [];
     
+    // Resetar status do boss
     bossFrozen = false;
     bossPoisoned = false;
     bossFreezeTimer = 0;
@@ -2599,8 +2794,10 @@
     bossSlowMultiplier = 1;
     bossBuffMultiplier = 1;
     
+    // Esconder elementos da espada
     swordArea.style.display = 'none';
     
+    // Esconder todas as telas do jogo e modais
     gameUI.style.display = 'none';
     gameArea.style.display = 'none';
     controls.style.display = 'none';
@@ -2611,9 +2808,67 @@
     settingsMenu.style.display = 'none';
     instructionsModal.style.display = 'none';
     
+    // Mostrar o menu principal
     menuScreen.style.display = 'flex';
+    
+    // Atualizar exibição da última partida
+    loadLastGameStats();
+    
+    // Resetar estado do jogo
     gameActive = false;
     gameOver = false;
+    
+    // Resetar posição do jogador
+    player.style.display = 'block';
+    player.classList.remove('playerHit', 'playerShield', 'playerSwordArea');
+    
+    // Resetar armas
+    playerWeapons = {
+      current: 'normal',
+      normal: { 
+        active: false,
+        damage: 10, 
+        cooldown: 0,
+        maxCooldown: 0.5,
+        level: 1,
+        shots: 1,
+        extraDamage: 0,
+        maxLevel: 4
+      },
+      bombs: {
+        inventory: {
+          normal: { count: 0, damage: 50, effect: 'explosion' },
+          ice: { count: 0, damage: 15, effect: 'freeze', freezeDuration: 3 },
+          poison: { count: 0, damage: 25, effect: 'poison', poisonDuration: 4, poisonDamage: 5 }
+        },
+        equipped: null,
+        cooldown: 0,
+        maxCooldown: 3
+      },
+      sword: {
+        active: false,
+        damage: 15,
+        cooldown: 0,
+        maxCooldown: 1,
+        duration: 0,
+        maxDuration: 15,
+        areaDamage: 5,
+        areaRadius: 80,
+        areaCooldown: 0,
+        blocksProjectiles: true
+      }
+    };
+    
+    // Atualizar exibição
+    updateWeaponDisplay();
+    updateScore();
+    
+    // Atualizar o recorde
+    highScoreDisplay.textContent = highScore;
+    
+    // Recriar partículas do menu
+    menuParticles.innerHTML = '';
+    createMenuParticles();
   }
 
   // ========== CONFIGURAÇÃO DE CONTROLES ==========
@@ -4461,12 +4716,12 @@
     if (guardSpawnInterval) clearInterval(guardSpawnInterval);
     
     if (boss) boss.remove();
-    bullets.forEach(b => b.el.remove());
-    playerBullets.forEach(b => b.el.remove());
-    powerUps.forEach(p => p.remove());
-    particles.forEach(p => p.el.remove());
-    guards.forEach(g => g.el.remove());
-    guardBullets.forEach(g => g.el.remove());
+    bullets.forEach(b => b.el?.remove());
+    playerBullets.forEach(b => b.el?.remove());
+    powerUps.forEach(p => p?.remove());
+    particles.forEach(p => p.el?.remove());
+    guards.forEach(g => g.el?.remove());
+    guardBullets.forEach(g => g.el?.remove());
     
     boss = null;
     bullets = [];
@@ -4549,6 +4804,9 @@
   function gameEnd() {
     gameOver = true;
     gameActive = false;
+    
+    // Salvar estatísticas da última partida
+    saveLastGameStats();
     
     if (powerUpInterval) clearInterval(powerUpInterval);
     if (bossPatternInterval) clearInterval(bossPatternInterval);
