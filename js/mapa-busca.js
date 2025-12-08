@@ -4,6 +4,7 @@
 // 1. VARIÁVEIS GLOBAIS
 // --------------------------------------------------------
 let collectionPoints = [];
+const PIN_IMAGE_PATH = '../assets/pin-trace.svg'; // Caminho corrigido para o SVG na pasta assets
 
 const elements = {
     selectLinha: document.getElementById('selectLinha'),
@@ -32,6 +33,15 @@ let generalMapInstance = null;
 let isSearchActive = false;
 let bairros = [];
 let currentToastTimeout = null;
+
+// Mapeamento direto de cores para filtros CSS otimizados
+const colorFilters = {
+'#FFFFFF': 'brightness(0) saturate(none) invert(none)',  // Branco (base)
+'#0455BF': 'brightness(0) saturate(100%) invert(24%) sepia(59%) saturate(2283%) hue-rotate(192deg) brightness(96%) contrast(101%)',  // Azul ajustado
+'#2ECC71': 'brightness(0) saturate(100%) invert(20%) sepia(80%) saturate(1227%) hue-rotate(88deg) brightness(98%) contrast(111%)',    // Verde
+'#8B4513': 'brightness(0) saturate(100%) invert(27%) sepia(43%) saturate(869%) hue-rotate(353deg) brightness(95%) contrast(101%)',    // Marrom
+'#656565': 'brightness(80%) saturate(100%) invert(20%)',   // Laranja/Outros
+};
 
 /**
  * Exibe uma notificação Toast na tela.
@@ -74,8 +84,200 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 // --------------------------------------------------------
-// 2. FUNÇÕES DE MAPA (LEAFLET)
+// 2. FUNÇÕES DE CORES E FILTROS CSS
 // --------------------------------------------------------
+
+/**
+ * Retorna a cor hexadecimal baseada na linha de resíduo.
+ */
+function getColorForLine(linha) {
+    const linhaParaCor = Array.isArray(linha) ? linha[0] : linha;
+    
+    const colors = {
+        'branca': '#FFFFFF',
+        'azul': '#0455BF',
+        'verde': '#2ECC71',
+        'marrom': '#8B4513',
+        'outros': '#ADADAD'
+    };
+    return colors[linhaParaCor] || '#04C4D9';
+}
+
+/**
+ * Converte cor hexadecimal para filtro CSS otimizado.
+ * Usa mapeamento direto para cores específicas.
+ */
+function hexToFilter(hexColor) {
+    // Normaliza a cor para formato #RRGGBB em maiúsculas
+    let normalizedColor = hexColor.toUpperCase();
+    if (!normalizedColor.startsWith('#')) {
+        normalizedColor = '#' + normalizedColor;
+    }
+    
+    // Se a cor está no mapeamento, retorna o filtro otimizado
+    if (colorFilters[normalizedColor]) {
+        return colorFilters[normalizedColor];
+    }
+    
+    // Fallback: calcula um filtro genérico
+    return calculateGenericFilter(hexColor);
+}
+
+/**
+ * Calcula um filtro CSS genérico para cores não mapeadas.
+ */
+function calculateGenericFilter(hexColor) {
+    // Remove o # se presente
+    let hex = hexColor.replace('#', '');
+    
+    // Converte hex para RGB
+    const r = parseInt(hex.substring(0, 2), 16) / 255;
+    const g = parseInt(hex.substring(2, 4), 16) / 255;
+    const b = parseInt(hex.substring(4, 6), 16) / 255;
+    
+    // Calcula HSL
+    const max = Math.max(r, g, b);
+    const min = Math.min(r, g, b);
+    let h, s, l = (max + min) / 2;
+    
+    if (max === min) {
+        h = s = 0; // achromatic
+    } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        
+        switch (max) {
+            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+            case g: h = (b - r) / d + 2; break;
+            case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+    }
+    
+    // Converte para graus e porcentagens
+    const hueDeg = Math.round(h * 360);
+    const saturationPercent = Math.round(s * 100);
+    const lightnessPercent = Math.round(l * 100);
+    
+    // Fórmula otimizada para SVGs com cor preta original
+    if (hexColor.toUpperCase() === '#FFFFFF') {
+        return 'invert(100%) brightness(2)';
+    }
+    
+    // Para cores escuras, invertemos menos e ajustamos o brilho
+    const brightnessAdjust = lightnessPercent > 50 ? 'brightness(1.1)' : 'brightness(0.9)';
+    
+    return `invert(${100 - lightnessPercent}%) sepia(${saturationPercent}%) saturate(${saturationPercent * 10}%) hue-rotate(${hueDeg}deg) ${brightnessAdjust}`;
+}
+
+/**
+ * Retorna uma classe de fallback baseada na cor.
+ */
+function getFallbackColorClass(hexColor) {
+    if (hexColor === '#FFFFFF') return 'pin-fallback-branca';
+    else if (hexColor === '#0455BF') return 'pin-fallback-azul';
+    else if (hexColor === '#2ECC71') return 'pin-fallback-verde';
+    else if (hexColor === '#8B4513') return 'pin-fallback-marrom';
+    else if (hexColor === '#000000') return 'pin-fallback-outros';
+    else return 'pin-fallback-default';
+}
+
+// --------------------------------------------------------
+// 3. FUNÇÕES DE MAPA (LEAFLET) COM SVG PERSONALIZADO
+// --------------------------------------------------------
+
+/**
+ * Cria um ícone personalizado com o SVG pin-trace.svg colorido.
+ */
+function createCustomIcon(color, isActive = false) {
+    const filter = hexToFilter(color);
+    const fallbackClass = getFallbackColorClass(color);
+    const size = isActive ? 45 : 35;
+    const iconSize = [size, size];
+    const iconAnchor = [size / 2, size];
+    const popupAnchor = isActive ? [0, -size + 10] : [0, -size];
+    
+    return L.divIcon({
+        className: `custom-pin-marker ${fallbackClass} ${isActive ? 'active' : ''}`,
+        html: `
+            <div class="pin-container" style="
+                width: ${size}px;
+                height: ${size}px;
+                position: relative;
+                transition: transform 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            ">
+                <img src="${PIN_IMAGE_PATH}" 
+                     alt="Marcador" 
+                     style="
+                        width: 100%;
+                        height: 100%;
+                        filter: ${filter};
+                        ${isActive ? 'transform: scale(1.1);' : ''}
+                     "
+                     onerror="handlePinImageError(this, '${color}')"
+                >
+                ${isActive ? `
+                    <div class="active-indicator" style="
+                        position: absolute;
+                        top: -5px;
+                        right: -5px;
+                        width: 12px;
+                        height: 12px;
+                        background-color: #FF5722;
+                        border-radius: 50%;
+                        border: 2px solid white;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+                    "></div>
+                ` : ''}
+            </div>
+        `,
+        iconSize: iconSize,
+        iconAnchor: iconAnchor,
+        popupAnchor: popupAnchor
+    });
+}
+
+/**
+ * Trata erro no carregamento do SVG.
+ */
+function handlePinImageError(imgElement, color) {
+    console.warn('SVG do pin não carregado, usando fallback CSS');
+    imgElement.style.display = 'none';
+    const container = imgElement.parentElement;
+    
+    // Cria um elemento de fallback com formato de pin
+    const fallbackDiv = document.createElement('div');
+    fallbackDiv.className = 'pin-fallback';
+    fallbackDiv.style.cssText = `
+        width: 100%;
+        height: 100%;
+        background-color: ${color};
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        border: 2px solid white;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        position: relative;
+    `;
+    
+    // Adiciona um ponto no centro para parecer um pin
+    const centerDot = document.createElement('div');
+    centerDot.style.cssText = `
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        width: 8px;
+        height: 8px;
+        background-color: white;
+        border-radius: 50%;
+    `;
+    
+    fallbackDiv.appendChild(centerDot);
+    container.appendChild(fallbackDiv);
+}
 
 /**
  * Inicializa o mapa geral com todos os pontos de coleta.
@@ -89,7 +291,7 @@ function initializeGeneralMap() {
     const mapContainer = document.getElementById('mapaGeral');
     if (!mapContainer) return;
 
-    generalMapInstance = L.map('mapaGeral').setView([-12.9714, -38.5014], 12);
+    generalMapInstance = L.map('mapaGeral').setView([-12.9714, -38.5014], 10.8);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -97,13 +299,7 @@ function initializeGeneralMap() {
 
     collectionPoints.forEach(point => {
         const iconColor = getColorForLine(point.linha);
-        
-        const customIcon = L.divIcon({
-            className: 'custom-marker',
-            html: `<div style="background-color: ${iconColor}; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.3);"></div>`,
-            iconSize: [26, 26],
-            iconAnchor: [13, 26]
-        });
+        const customIcon = createCustomIcon(iconColor);
 
         const marker = L.marker([point.latitude, point.longitude], { icon: customIcon })
             .addTo(generalMapInstance)
@@ -112,9 +308,14 @@ function initializeGeneralMap() {
                     <h3 style="margin: 0 0 8px 0; color: #03264C;">${point.nome}</h3>
                     <p style="margin: 0 0 5px 0; font-size: 0.9rem;">${point.endereco}</p>
                     <p style="margin: 0 0 5px 0; font-size: 0.85rem; color: #666;">${point.tipoInstituicao}</p>
-                    <p style="margin: 0; font-size: 0.8rem; color: #04C4D9; font-weight: bold;">${formatarLinha(point.linha)}</p>
+                    <p style="margin: 0; font-size: 0.8rem; color: #04C4D9; font-weight: bold;">Aceita: ${formatarLinha(point.linha)}</p>
+                    ${point.contato ? `<p style="margin: 5px 0 0 0; font-size: 0.8rem; color: #666;"><strong>Contato:</strong> ${point.contato}</p>` : ''}
                 </div>
             `);
+        
+        marker.on('mouseover', () => {
+            marker.openPopup();
+        });
         
         marker.on('click', () => {
             openDetailModal(point);
@@ -123,23 +324,9 @@ function initializeGeneralMap() {
 }
 
 /**
- * Retorna uma cor baseada na linha de resíduo.
- */
-function getColorForLine(linha) {
-    const colors = {
-        'branca': '#FFFFFF',
-        'azul': '#0455BF',
-        'verde': '#2ECC71',
-        'marrom': '#8B4513',
-        'outros': '#FFA500'
-    };
-    return colors[linha] || '#04C4D9';
-}
-
-/**
  * Inicializa o mapa Leaflet no modal de detalhes.
  */
-function initializeMap(lat, lon, name) {
+function initializeMap(lat, lon, name, linha) {
     if (currentMapInstance) {
         currentMapInstance.remove();
         currentMapInstance = null;
@@ -161,14 +348,10 @@ function initializeMap(lat, lon, name) {
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(currentMapInstance);
 
-        const activeIcon = L.divIcon({
-            className: 'custom-marker',
-            html: `<div style="background-color: var(--accent-color); width: 20px; height: 20px; border-radius: 50%; border: 4px solid var(--secondary-color);"></div>`,
-            iconSize: [28, 28],
-            iconAnchor: [14, 28]
-        });
+        const iconColor = getColorForLine(linha);
+        const activeIcon = createCustomIcon(iconColor, true);
         
-        L.marker([lat, lon], { icon: activeIcon }).addTo(currentMapInstance)
+        const marker = L.marker([lat, lon], { icon: activeIcon }).addTo(currentMapInstance)
             .bindPopup(name).openPopup();
 
         setTimeout(() => {
@@ -183,7 +366,7 @@ function initializeMap(lat, lon, name) {
 }
 
 // --------------------------------------------------------
-// 3. LÓGICA DE RENDERIZAÇÃO E MODAL
+// 4. LÓGICA DE RENDERIZAÇÃO E MODAL
 // --------------------------------------------------------
 
 /**
@@ -246,9 +429,22 @@ function renderResults(points) {
 }
 
 /**
- * Formatar nome da linha para exibição.
+ * Formata uma ou múltiplas linhas para exibição.
+ * Agora suporta string única ou array de linhas.
  */
 function formatarLinha(linha) {
+    // Se for array, processa cada item
+    if (Array.isArray(linha)) {
+        return linha.map(l => formatarUmaLinha(l)).join(', ');
+    }
+    // Se for string única
+    return formatarUmaLinha(linha);
+}
+
+/**
+ * Formata uma única linha.
+ */
+function formatarUmaLinha(linha) {
     const linhas = {
         'branca': 'Linha Branca',
         'azul': 'Linha Azul',
@@ -265,6 +461,14 @@ function formatarLinha(linha) {
  */
 function openDetailModal(point) {
     const safeImage = point.imagem || 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80';
+    
+    // Adiciona campo de contato se existir
+    const contatoHTML = point.contato ? `
+        <div class="modal-detalhe">
+            <strong>Contato:</strong>
+            <span id="detail-contact">${point.contato}</span>
+        </div>
+    ` : '';
     
     elements.modalConteudo.innerHTML = `
         <div class="modal-imagem">
@@ -294,12 +498,13 @@ function openDetailModal(point) {
                     <strong>Caixa Coletora:</strong>
                     <span id="detail-caixa">${point.caixaColetora === 'sim' ? 'Sim' : point.caixaColetora === 'nao' ? 'Não' : 'Não informado'}</span>
                 </div>
+                ${contatoHTML}
                 <div class="modal-detalhe">
                     <strong>Bairro e CEP:</strong>
                     <span id="detail-bairro-cep">${point.bairro} | CEP: ${point.cep}</span>
                 </div>
                 <div class="modal-detalhe">
-                    <strong>Linha/Categoria:</strong>
+                    <strong>Linha(s)/Categoria(s):</strong>
                     <span>${formatarLinha(point.linha)}</span>
                 </div>
             </div>
@@ -329,7 +534,7 @@ function openDetailModal(point) {
     document.body.style.overflow = 'hidden';
 
     setTimeout(() => {
-        initializeMap(point.latitude, point.longitude, point.nome);
+        initializeMap(point.latitude, point.longitude, point.nome, point.linha);
     }, 100);
 }
 
@@ -346,7 +551,7 @@ function closeDetailModal() {
 }
 
 // --------------------------------------------------------
-// 4. LÓGICA DE BUSCA PRINCIPAL
+// 5. LÓGICA DE BUSCA PRINCIPAL
 // --------------------------------------------------------
 
 /**
@@ -363,9 +568,18 @@ function handleSearch() {
 
     setTimeout(() => {
         try {
-            let pontosFiltrados = collectionPoints.filter(ponto => 
-                ponto.linha === linhaSelecionada
-            );
+            // Filtra por linha (agora suporta múltiplas linhas)
+            let pontosFiltrados = collectionPoints.filter(ponto => {
+                // Se o ponto tiver uma única linha como string
+                if (typeof ponto.linha === 'string') {
+                    return ponto.linha === linhaSelecionada;
+                }
+                // Se o ponto tiver múltiplas linhas como array
+                else if (Array.isArray(ponto.linha)) {
+                    return ponto.linha.includes(linhaSelecionada);
+                }
+                return false;
+            });
 
             if (searchType === 'geolocation') {
                 handleGeolocationSearch(pontosFiltrados);
@@ -467,7 +681,7 @@ function handleGeolocationSearch(pontosFiltrados) {
 }
 
 // --------------------------------------------------------
-// 5. CARREGAMENTO DE DADOS DOS ARQUIVOS JSON
+// 6. CARREGAMENTO DE DADOS DOS ARQUIVOS JSON
 // --------------------------------------------------------
 
 /**
@@ -555,10 +769,42 @@ async function carregarPontosDeColeta() {
         console.error('Erro ao carregar pontos de coleta:', error);
         showToast('Erro ao carregar os pontos de coleta. Verifique o arquivo JSON.', 'error', 5000);
         
-        // Fallback: usar dados padrão
+        // Fallback: usar dados padrão com contato e múltiplas linhas
         collectionPoints = [
-            { "id": "trace-01", "nome": "Ecoponto Central Recicla", "endereco": "Rua das Flores, 123", "descricao": "Ecoponto municipal que aceita diversos tipos de lixo eletrônico, incluindo pilhas e baterias. Possui equipe para auxiliar no descarte correto.", "tipoInstituicao": "Prefeitura", "horarios": "Seg–Sex 09:00–17:00, Sáb 08:00–12:00", "caixaColetora": "sim", "bairro": "Centro", "cep": "01000-000", "tiposResiduos": ["pilhas", "baterias", "celulares", "cabos", "periféricos"], "imagem": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", "latitude": -12.9714, "longitude": -38.5014, "linha": "verde" },
-            { "id": "trace-02", "nome": "ONG Tech Verde", "endereco": "Avenida Brasil, 456", "descricao": "Organização não governamental focada no recondicionamento e descarte de eletrônicos para doação e reciclagem.", "tipoInstituicao": "ONG", "horarios": "Seg–Sex 09:00–18:00", "caixaColetora": "nao", "bairro": "Vila Nova", "cep": "02000-000", "tiposResiduos": ["computadores", "notebooks", "monitores", "impressoras", "celulares"], "imagem": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", "latitude": -12.9780, "longitude": -38.5045, "linha": "verde" }
+            { 
+                "id": "trace-01", 
+                "nome": "Ecoponto Central Recicla", 
+                "endereco": "Rua das Flores, 123", 
+                "descricao": "Ecoponto municipal que aceita diversos tipos de lixo eletrônico, incluindo pilhas e baterias. Possui equipe para auxiliar no descarte correto.", 
+                "tipoInstituicao": "Prefeitura", 
+                "contato": "(71) 3333-4444",
+                "horarios": "Seg–Sex 09:00–17:00, Sáb 08:00–12:00", 
+                "caixaColetora": "sim", 
+                "bairro": "Centro", 
+                "cep": "01000-000", 
+                "tiposResiduos": ["pilhas", "baterias", "celulares", "cabos", "periféricos"], 
+                "imagem": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                "latitude": -12.9714, 
+                "longitude": -38.5014, 
+                "linha": ["verde", "azul"]
+            },
+            { 
+                "id": "trace-02", 
+                "nome": "ONG Tech Verde", 
+                "endereco": "Avenida Brasil, 456", 
+                "descricao": "Organização não governamental focada no recondicionamento e descarte de eletrônicos para doação e reciclagem.", 
+                "tipoInstituicao": "ONG", 
+                "contato": "contato@techverde.org.br",
+                "horarios": "Seg–Sex 09:00–18:00", 
+                "caixaColetora": "nao", 
+                "bairro": "Vila Nova", 
+                "cep": "02000-000", 
+                "tiposResiduos": ["computadores", "notebooks", "monitores", "impressoras", "celulares"], 
+                "imagem": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80", 
+                "latitude": -12.9780, 
+                "longitude": -38.5045, 
+                "linha": ["verde", "marrom", "outros"]
+            }
         ];
         
         initializeGeneralMap();
@@ -566,7 +812,7 @@ async function carregarPontosDeColeta() {
 }
 
 // --------------------------------------------------------
-// 6. EVENT LISTENERS E INICIALIZAÇÃO
+// 7. EVENT LISTENERS E INICIALIZAÇÃO
 // --------------------------------------------------------
 
 /**
@@ -676,6 +922,92 @@ document.addEventListener('keydown', (e) => {
 
 // Inicialização quando a página carrega
 document.addEventListener('DOMContentLoaded', function() {
+    // Adiciona estilos CSS dinamicamente para os pins SVG
+    const style = document.createElement('style');
+    style.textContent = `
+        .custom-pin-marker {
+            background: transparent !important;
+            border: none !important;
+        }
+        
+        .custom-pin-marker .pin-container {
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
+            transition: transform 0.3s ease;
+            will-change: transform;
+        }
+        
+        .custom-pin-marker .pin-container:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+        }
+        
+        .custom-pin-marker.active .pin-container {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Fallback colors para quando o SVG não carrega */
+        .pin-fallback-branca .pin-fallback {
+            background-color: #FFFFFF !important;
+        }
+        
+        .pin-fallback-azul .pin-fallback {
+            background-color: #005BAE !important;
+        }
+        
+        .pin-fallback-verde .pin-fallback {
+            background-color: #005500 !important;
+        }
+        
+        .pin-fallback-marrom .pin-fallback {
+            background-color: #8B4513 !important;
+        }
+        
+        .pin-fallback-outros .pin-fallback {
+            background-color: #ADADAD !important;
+        }
+        
+        .pin-fallback-default .pin-fallback {
+            background-color: #0ADADAD !important;
+        }
+        
+        /* Ajuste para Leaflet */
+        .leaflet-marker-icon.custom-pin-marker {
+            background: transparent !important;
+            border: none !important;
+        }
+        
+        /* Melhor visualização para SVG */
+        .custom-pin-marker .pin-container img {
+            object-fit: contain;
+            pointer-events: none;
+        }
+        
+        /* Estilo para fallback */
+        .pin-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Ajuste do indicador ativo */
+        .active-indicator {
+            z-index: 1000;
+        }
+    `;
+    document.head.appendChild(style);
+    
     // Carregar bairros e pontos de coleta
     carregarBairros();
     carregarPontosDeColeta();
