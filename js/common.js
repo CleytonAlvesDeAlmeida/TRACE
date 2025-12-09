@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (navigator.share) {
                 navigator.share({
                     title: document.title,
-                    text: 'Conheça o projeto T.R.A.C.E. - Tecnologia e Reciclagem Ambiental Consciente Eletrônica',
+                    text: 'Conheça o T.R.A.C.E. - Tecnologia para Rastreamento de Ambientes de Coleta Eletrônica',
                     url: window.location.href
                 })
                 .then(() => console.log('Compartilhado com sucesso!'))

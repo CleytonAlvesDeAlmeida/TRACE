@@ -70,22 +70,17 @@ function showToast(message, type = 'info', duration = 3000) {
 
 /**
  * Calcula a distância Haversine entre dois pontos de coordenadas.
- * CORREÇÃO: Agora calcula a distância corretamente (não dividida pela metade).
  */
 function calculateDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; // Raio da Terra em quilômetros
+    const R = 6371;
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
-    
-    const a = 
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * 
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    
+
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distance = R * c;
-    
-    return distance; // Distância em quilômetros
+    return (R * c) * 2;
 }
 
 // --------------------------------------------------------
@@ -651,30 +646,20 @@ function handleGeolocationSearch(pontosFiltrados) {
             const userLat = position.coords.latitude;
             const userLon = position.coords.longitude;
             
-            // Calcula a distância para cada ponto
             const pointsWithDistance = pontosFiltrados.map(point => ({
                 ...point,
                 distance: calculateDistance(userLat, userLon, point.latitude, point.longitude)
             }));
 
-            // Ordena por distância (mais próximo primeiro)
             pointsWithDistance.sort((a, b) => a.distance - b.distance);
 
-            // Cria uma cópia dos resultados para exibição com a distância formatada
             const resultsForDisplay = pointsWithDistance.map(p => ({
                 ...p,
-                // CORREÇÃO: Adiciona a distância formatada ao nome
-                displayName: `${p.nome} (${p.distance.toFixed(1)} km)`
+                nome: `${p.nome} (${p.distance.toFixed(1)} km)`
             }));
 
-            // Atualiza os resultados para usar o nome de exibição
-            const displayResults = resultsForDisplay.map(p => ({
-                ...p,
-                nome: p.displayName
-            }));
-
-            renderResults(displayResults);
-            showToast(`Encontrados ${displayResults.length} ponto(s) próximo(s) à sua localização.`, 'success', 3000);
+            renderResults(resultsForDisplay);
+            showToast('Pontos listados por proximidade à sua localização.', 'success', 3000);
             isSearchActive = false;
         },
         (error) => {
